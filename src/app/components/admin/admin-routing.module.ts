@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Import admin components
 import { SidenavComponent } from '../admin/sidenav/sidenav.component';
 
 

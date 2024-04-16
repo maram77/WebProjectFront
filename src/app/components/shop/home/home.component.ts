@@ -52,7 +52,6 @@ export class HomeComponent implements OnInit {
     },
     error => {
       console.error('Error fetching cart items:', error);
-      // Handle error, e.g., display an error message to the user
     }
   );
 }

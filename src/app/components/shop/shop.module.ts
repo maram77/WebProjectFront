@@ -17,7 +17,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// Import the library
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 import { from } from 'rxjs';
