@@ -1,0 +1,73 @@
+<div class="my-account sec-padding">
+  <div class="container">
+     <mat-card fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start"  class="p-0">
+        <div class="my-account-wrap p-0" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" >
+          <div class="login-wrapper pr-50" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+            <div class="title">
+              <h3>Login</h3>
+            </div>
+             <form fxLayout="row wrap" [formGroup]="loginForm">
+              <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Email address" name="email_login" id="email_login" formControlName="email" required>
+                  <mat-error *ngIf="loginForm.get('email').errors?.required">Please enter your email address</mat-error>
+                </mat-form-field>
+              </div>
+              <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="Password" type="password" name="password_login" id="'password_login" formControlName="password" required>
+                  <mat-error *ngIf="loginForm.get('password').errors?.required">Please enter your password</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="forgot-password">
+                <a routerLink="/pages/reset-password" class="custom-link">Forgot Password?</a> 
+              </div>
+              <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1" fxLayoutAlign="flex-end">
+                <button class="btn-project" mat-raised-button color="accent" type="submit" (click)="login()">Login</button>
+              </div>
+            </form>
+          </div>
+                <div class="register-wrapper pr-15" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+                    <div class="title">
+                        <h3>Register</h3>
+                      </div>
+                      <div class="register-body">
+                        <p>Create new account today to reap the benefits of a personalized shopping experience.</p>
+                        <form fxLayout="row wrap" [formGroup]="registerForm">
+                            <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Firstname" name="firstname" id="firstname" formControlName="firstname" required>
+                                    <mat-error *ngIf="registerForm.get('firstname').errors?.required">Please enter your firstname</mat-error>
+                                  </mat-form-field>
+                                  <mat-form-field class="w-100">
+                                    <input matInput placeholder="Lastname" name="lastname" id="lastname" formControlName="lastname" required>
+                                    <mat-error *ngIf="registerForm.get('lastname').errors?.required">Please enter your lastname</mat-error>
+                                  </mat-form-field>
+                                  <mat-form-field class="w-100">
+                                    <input matInput placeholder="Email address" name="email" id="email" formControlName="email" required>
+                                    <mat-error *ngIf="registerForm.get('email').errors?.required">Please enter your email address</mat-error>
+                                  </mat-form-field>
+                                  <mat-form-field class="w-100">
+                                    <input matInput placeholder="Phone" name="telephone" id="telephone" formControlName="telephone" required>
+                                    <mat-error *ngIf="registerForm.get('telephone').errors?.required">Please enter your phone number</mat-error>
+                                  </mat-form-field>
+                                  <mat-form-field class="w-100">
+                                    <input matInput placeholder="Password" type="password" name="password" id="password" formControlName="password" required>
+                                    <mat-error *ngIf="registerForm.get('password').errors?.required">Please enter your password</mat-error>
+                                  </mat-form-field>
+                                  <mat-form-field class="w-100">
+                                    <input matInput placeholder="Confirm password" type="password" name="confirmPassword" id="confirmPassword" formControlName="confirmPassword" required>
+                                    <mat-error *ngIf="registerForm.get('confirmPassword').errors?.required">Please confirm your password</mat-error>
+                                  </mat-form-field>
+                            </div>
+                            <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                <button class="btn-project" mat-raised-button color="accent" type="submit" (click) = "register()">Register</button>
+                              </div>
+                            </form>
+                      </div>
+                  </div>
+        </div>
+      </mat-card>
+
+  </div>
+</div>

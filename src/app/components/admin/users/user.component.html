@@ -1,0 +1,54 @@
+<div class="user-component sec-padding">
+   <div class="container">
+     <div class="mat-elevation-z8">
+       <table mat-table [dataSource]="users" class="users-class">
+          <ng-container matColumnDef="id">
+           <th  *matHeaderCellDef> ID </th>
+           <td *matCellDef="let user"> {{user.id}} </td>
+         </ng-container>
+ 
+         <ng-container matColumnDef="firstname">
+           <th  *matHeaderCellDef> First Name </th>
+           <td *matCellDef="let user"> {{user.firstname}} </td>
+         </ng-container>
+
+         <ng-container matColumnDef="lastname">
+           <th  *matHeaderCellDef> Last Name </th>
+           <td  *matCellDef="let user"> {{user.lastname}} </td>
+         </ng-container>
+ 
+         <ng-container matColumnDef="email">
+           <th  *matHeaderCellDef> Email </th>
+           <td  *matCellDef="let user" class="email"> {{user.email}} </td>
+         </ng-container>
+ 
+         <ng-container matColumnDef="telephone">
+           <th  *matHeaderCellDef> Telephone </th>
+           <td  *matCellDef="let user"> {{user.telephone}} </td>
+         </ng-container>
+         <ng-container matColumnDef="userRole">
+          <th *matHeaderCellDef> Role </th>
+          <td *matCellDef="let user"> {{user.userRole}} </td>
+        </ng-container>
+         <ng-container matColumnDef="actions">
+            <th  *matHeaderCellDef> Actions </th>
+            <td  *matCellDef="let user" class="actions-column"> 
+              <button mat-icon-button color="primary" (click)="desactiverUser(user)">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteUser(user)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+         <tr mat-row *matRowDef="let user; columns: displayedColumns;"></tr>
+       </table>
+       <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                      showFirstLastButtons
+                      aria-label="Select page of users">
+       </mat-paginator>
+     </div>
+   </div>
+ </div>
+ 

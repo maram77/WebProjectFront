@@ -1,0 +1,48 @@
+<div class="my-account sec-padding">
+    <div class="container">
+        <mat-card fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" class="p-0">
+            <div class="register-wrapper pr-15" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+                <div class="title">
+                    <h3>{{ editMode ? 'Edit Profile' : 'Profile' }}</h3>
+                </div>
+                <div class="register-body">
+                    <p>{{ editMode ? 'Update your account details here. Make changes as needed.' : 'Manage your account details here. View and update your information as needed.' }}</p>
+                    <form fxLayout="row wrap" [formGroup]="updateForm">
+                        <div fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                            <mat-form-field class="w-100">
+                                <mat-label>First Name</mat-label>
+                                <input matInput name="firstname" id="firstname" [(ngModel)]="user.firstname"  formControlName="firstname" #firstnameInput>
+                            </mat-form-field>
+                            <mat-form-field class="w-100">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput name="lastname" id="lastname" [(ngModel)]="user.lastname"  formControlName="lastname" #lastnameInput>
+                            </mat-form-field>
+                            <mat-form-field class="w-100">
+                                <mat-label>Email Address</mat-label>
+                                <input matInput name="email" id="email" [(ngModel)]="user.email"   formControlName="email" #emailInput>
+                            </mat-form-field>
+                            <mat-form-field class="w-100">
+                                <mat-label>Phone Number</mat-label>
+                                <input matInput name="telephone" id="telephone" [(ngModel)]="user.telephone"  formControlName="telephone" #telephoneInput>
+                            </mat-form-field>
+                            <mat-form-field class="w-100">
+                                <mat-label>Password</mat-label>
+                                <input matInput type="password" name="password" id="password"  formControlName="password" #passwordInput>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="editMode" class="w-100">
+                                <mat-label>Confirm Password</mat-label>
+                                <input matInput type="password" name="confirmPassword" id="confirmPassword" [(ngModel)]="confirmPassword" formControlName="confirmPassword" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1" fxLayoutAlign="flex-end">
+                            <button *ngIf="!editMode" class="btn-project" mat-raised-button color="accent" (click)="toggleEditMode()">Edit Profile</button>
+                            <button *ngIf="editMode" class="btn-project" mat-raised-button color="primary" (click)="saveChanges()">Save Changes</button>
+                            <div style="margin-left: 10px;"></div>
+                            <button *ngIf="editMode" class="btn-project" mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
