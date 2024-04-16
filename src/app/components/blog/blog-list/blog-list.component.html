@@ -1,0 +1,54 @@
+<div class="blog-list">
+    <div class="container">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" class="blog-list-wrapper sec-padding">
+          <div fxFlex="100" fxFlex.gt-sm="70" class="main-blog-panel">
+          
+              <div class="card-container" *ngFor="let item of (title.trim() === '' ? allBlogs : result)" >    
+                  <div class="single-blog-list" fxLayout="row" fxLayout.lt-md="column">
+                      <div fxFlex="100" fxFlex.gt-sm="50" class="image-box">
+                       <img   [src]="item.img || defaultImage"  height="300px" style="  width: 300px;
+                        height: 200px;
+                        object-fit: cover;
+                        margin: 15px;
+                        background-size: cover; ">
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="50" class="text-box">
+                          <a href=""> <h4>{{item.title}}</h4></a>
+                        <ul fxLayout="row">
+                          <li><i class="material-icons">access_time</i>{{item.created_on | date:'medium'}}</li>
+                          <li><i class="material-icons">person</i>{{item.user.firstname}} {{item.user.lastname}}</li>
+                      
+                        </ul>
+                        <p> {{item.description.length > 200 ? item.description.substr(0,200)+'...':item.description}}</p>
+                        <mat-card-actions>
+                          <button mat-raised-button color="primary" >{{item.countLike}} <mat-icon>favorite</mat-icon></button>
+                          <button mat-raised-button color="primary" style="margin-left: 5px;">{{item.countView}} <mat-icon>remove_red_eye</mat-icon></button>
+                          <button mat-raised-button color="primary" style="margin-left: 5px;"  [routerLink]="['/pages/blog-details',item.id]" routerLinkActive="router-link-active">View Blog</button>
+                        </mat-card-actions>
+                        </div>
+                        
+                  </div>
+               
+  
+              </div>
+      
+  
+           </div>            
+           <div fxFlex="100" fxFlex.gt-sm="30" class="sidebar">
+              <div class="blog-sidebar">
+                  <div class="search mb-30">
+                      <input class="form-control" placeholder="Search..." type="search" matInput [(ngModel)]="title" >
+                      <button mat-button matSuffix (click)="searchByTitle()"><i class="fa fa-search" aria-hidden="true"></i> </button>
+                  </div>
+              </div>
+           </div>
+      </div>
+    </div>
+  
+    <div style=" text-align: center; margin-top: 100px;" *ngIf="result.length==0">
+      <mat-icon class="icon">no_sim</mat-icon>
+      <br>
+      <span>Nothing to see here.</span>
+  </div>
+  </div>
+  

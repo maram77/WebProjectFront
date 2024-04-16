@@ -1,0 +1,55 @@
+
+<mat-table [dataSource]="blogs" class="mat-elevation-z8"  style="margin: 50px;">
+
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+    <mat-cell *matCellDef="let blog">{{ blog.title }}</mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <mat-cell *matCellDef="let blog">{{ blog.description }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="author">
+    <mat-header-cell *matHeaderCellDef>Author</mat-header-cell>
+    <mat-cell *matCellDef="let blog">{{ blog.user.firstname}} {{blog.user.lastname}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="image">
+    <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+    <mat-cell *matCellDef="let blog"><img [src]="blog.img || defaultImage" alt="Blog Image" width="70px"></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+    <mat-cell *matCellDef="let blog">{{blog.created_on | date:'medium'}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let blog" class="action-cell">
+      <button mat-icon-button [routerLink]="['/pages/blog-comments', blog.id]" routerLinkActive="router-link-active"
+        class="action-button" 
+        style="background-color: #007bff; width: 70px; border-radius: 5px;" 
+        matTooltip="Comments" matTooltipPosition="above">
+        <mat-icon style="color: white;">comment</mat-icon>
+      </button>
+  
+      <button mat-icon-button (click)="editBlog(blog)" class="action-button" 
+      style="background-color: #28a745; margin-left: 10px; margin-right: 10px; width: 70px; border-radius: 5px;" 
+      matTooltip="Edit Blog" matTooltipPosition="above">
+        <mat-icon style="color: white;">edit</mat-icon>
+      </button>
+  
+      <button mat-icon-button (click)="deleteBlog(blog)" class="action-button" 
+      style="background-color: #dc3545; width: 70px; border-radius: 5px;" 
+      matTooltip="Delete Blog" matTooltipPosition="above">
+        <mat-icon style="color: white;">delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

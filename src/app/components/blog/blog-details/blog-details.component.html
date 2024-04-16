@@ -1,0 +1,113 @@
+
+<div *ngIf="blogData" class="card-container">
+    <div class="blog-details">
+      <div class="container">
+        <div class="blog-list-wrapper sec-padding" fxLayout="row" fxLayout.lt-md="column">
+            <div fxFlex="100" fxFlex.gt-sm="70"  class="main-blog-panel">
+                <div class="single-blog-list">
+                    <div style="text-align: right;"  *ngIf="blogData.user.id === 1">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="openEditForm(blogData)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item (click)="deleteBlog(blogData)" >
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                        </mat-menu>
+                    </div>
+               
+                    <div class="text-box">
+                      <h4>{{blogData.title}}</h4>
+                      <ul class="post-info" fxLayout="row">
+                        <li><i class="material-icons">access_time </i> {{blogData.created_on | date:'medium'}}</li>
+                        <li><i class="material-icons">person </i>{{blogData.user.firstname}} {{blogData.user.lastname}}</li>
+       
+                      </ul>
+    
+                      <img mat-card-image [src]="Image" height="300px" style="  width: 300px;
+                      height: 200px;
+                      object-fit: cover;
+                      margin: 15px;
+                      background-image: url('assets/images/blog/b1.jpg'); 
+                      background-size: cover;"/>
+                      
+                      <p> {{blogData.description}}</p>
+                      <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="likeBlog()" >{{blogData.countLike}} <mat-icon>favorite</mat-icon></button>
+                        <button mat-raised-button color="primary" style="margin-left: 5px;">{{blogData.countView}} <mat-icon>remove_red_eye</mat-icon></button>
+                      </mat-card-actions>
+                   
+                   </div>
+             
+                   <div class="comments-area">
+                    <div class="group-title">
+                        <h3>Read Comments</h3>
+                    </div>
+                    <!--Comment Box-->
+                    <div class="comment-box" *ngFor="let comment of comments">
+                        
+                        <div class="comment">
+                            <div class="author-thumb"><img src="assets/images/about-us/t2.jpg" alt=""></div>
+                            <div class="comment-inner">
+                                <div class="comment-info clearfix">{{comment.user.firstname}} {{comment.user.lastname}} – {{comment.created_on | date:'medium'}}</div>                           
+                                    <div class="rating" *ngIf="comment.user.id === 1">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                          <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                          <div *ngIf="!comment.isEditing">
+                                          <button mat-menu-item (click)="toggleEditMode(comment)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                          </button>
+                                        </div>
+                                          <button mat-menu-item (click)="deleteComment(comment)" >
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Delete</span>
+                                          </button>
+                                        </mat-menu>
+                                    </div>
+                                <div class="text">
+                                    <div *ngIf="comment.isEditing">
+                                        <mat-form-field appearance="fill">
+                                          <textarea matInput [(ngModel)]="comment.content"></textarea>
+                                        </mat-form-field>
+                                        <button mat-raised-button color="primary" (click)="updateComment(comment)">Save</button>
+                                      </div>
+                                      <div *ngIf="!comment.isEditing">
+                                      {{comment.content}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+                <div class="contact-form">
+                    <div class="header-title">
+                        <h3>Add Your Comments</h3>
+                    </div>
+                    <form [formGroup]="commentForm" fxLayout="row wrap">
+                      <div [ngClass]="{'mt-20': true, 'mt-10': true, 'mt-1': true}" fxFlex="100" fxFlex.gt-sm="100" class="px-1">
+                        <mat-form-field class="w-100">
+                          <textarea placeholder="Post content" matInput formControlName="content"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1">
+                        <button class="btn-project" mat-raised-button color="accent" (click)="publishComment()" [disabled]="!commentForm.valid" >Publish Comment</button>
+                      </div>
+                    </form>
+                </div>
+                </div>
+             </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+    
