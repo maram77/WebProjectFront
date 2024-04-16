@@ -119,9 +119,9 @@ export class BlogUpdateComponent implements OnInit {
     const formData = {
       title: this.editForm.value.title,
       description: this.editForm.value.description,
-      image: this.data.image, // Include image property
+      image: this.data.image,
       user: {
-        id: this.editForm.value.userId// Replace with the actual user id
+        id: this.editForm.value.userId
       }
     };
     const editdata = this.editForm.value;

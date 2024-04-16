@@ -87,7 +87,7 @@ export class BlogAddComponent implements OnInit {
     this.postForm = this.fb.group({
       title: [null, Validators.required],
       description: [null, [Validators.required, Validators.maxLength(5000)]],
-      image: [] // Corrected property name to match with setFileData method
+      image: []
     });
   }
 
@@ -111,9 +111,9 @@ export class BlogAddComponent implements OnInit {
     const formData = {
       title: this.postForm.value.title,
       description: this.postForm.value.description,
-      image: '', // Include image property
+      image: '',
       user: {
-        id: 1 // Replace with the actual user id
+        id: 1 
       }
     };
 
