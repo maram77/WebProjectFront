@@ -1,0 +1,26 @@
+<div class="product-item">
+  <mat-card fxLayout="column">
+    <div class="product-img">
+      <a class="product-link" [routerLink]="['/product', product.productReference]">
+        <img src="../../../../../assets/images/{{ product.image }}">
+      </a>
+    </div>
+    <div class="product-info-wrapper">
+      <span class="category">{{ categoryName }}</span>
+      <div class="title-wrap">
+        <h4>{{ product.name }}</h4>
+      </div>
+      <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+        <p>{{ product.price | currency }}</p>
+        <a (click)="addToCart(product)">
+          <mat-icon class="mat-icon-lg">shopping_cart</mat-icon>
+        </a>
+      </div>
+      <div class="icons" fxLayout="column">
+        <a (click)="openProductDialog(product)">
+          <mat-icon>remove_red_eye</mat-icon>
+        </a>
+      </div>
+    </div>
+  </mat-card>
+</div>

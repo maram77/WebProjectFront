@@ -1,0 +1,14 @@
+<div class="brands-items">
+    <mat-radio-group
+      (change)="categorySelect($event)"
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group">
+      <mat-radio-button fxLayout="row" class="example-radio-button" [value]="'all'">
+        All Categories
+      </mat-radio-button>
+      <mat-radio-button fxLayout="row" class="example-radio-button" *ngFor="let category of categories" [value]="category" multiple>
+        {{ category.categoryName }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  

@@ -1,0 +1,8 @@
+<div class="category-contant">
+  <ul>
+    <li><a class="no-brd" (click)="onCategorySelected('all')" [routerLink]="['']">Show All</a></li>
+    <li *ngFor="let category of categories">
+      <a (click)="onCategoryChanged(category.categoryName)" [routerLink]="['', category.categoryName]">{{ category.categoryName }}</a>
+    </li>
+  </ul>
+</div>

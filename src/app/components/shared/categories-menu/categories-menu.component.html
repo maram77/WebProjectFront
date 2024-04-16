@@ -1,0 +1,7 @@
+<div class="category-contant">
+  <ul>
+    <li *ngFor="let category of categories">
+      <a [routerLink]="['', category.name]">{{ category.name }}</a>
+    </li>
+  </ul>
+</div>

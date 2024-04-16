@@ -1,0 +1,23 @@
+.color-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .color-box {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .color-name {
+    margin-left: 5px;
+  }
+  
+  .color-option.selected .color-box {
+    border: 2px solid blue; // Example style for selected state
+  }
+  
