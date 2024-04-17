@@ -1,11 +1,9 @@
 <div class="category-contant">
     <ul>
-        <li><a class="no-brd" [routerLink]="['/home/products/all']">Show All</a></li>
-        <li><a [routerLink]="['/home/products/Headphones']">Headphones</a></li>
-        <li><a [routerLink]="['/home/products/Laptops']">Laptops</a></li>
-        <li><a [routerLink]="['/home/products/Smartphones']">Smart Phones</a></li>
-        <li><a [routerLink]="['/home/products/Cameras']">Cameras</a></li>
-        <li><a [routerLink]="['/home/products/Tv & Audio']">Tv & Audio</a></li>
-        <li><a [routerLink]="['/home/products/Watches']">Watches</a></li>
+      <li><a class="no-brd" (click)="onCategorySelected('all')" [routerLink]="['']">Show All</a></li>
+      <li *ngFor="let category of categories">
+        <a (click)="onCategoryChanged(category.categoryName)" [routerLink]="['', category.categoryName]">{{ category.categoryName }}</a>
+      </li>
     </ul>
-</div>
+  </div>
+  

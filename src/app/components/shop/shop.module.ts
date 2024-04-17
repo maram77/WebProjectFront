@@ -15,16 +15,15 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
-// Import the library
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
-
-import { from } from 'rxjs';
 import { ProductCarouselTwoComponent } from './home/product-carousel-two/product-carousel-two.component';
 import { BrandsComponent } from './widgets/brands/brands.component';
 import { CategoriesComponent } from './widgets/categories/categories.component';
 import { PopularProductsComponent } from './widgets/popular-products/popular-products.component';
 import { ProductZoomComponent } from './products/product-details/product-zoom/product-zoom.component';
-
+import { CategoryfilterComponent } from './widgets/categories/categoryfilter/categoryfilter.component';
+import { ColorFilterComponent } from './widgets/color-filter/color-filter.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,8 @@ import { ProductZoomComponent } from './products/product-details/product-zoom/pr
     CategoriesComponent,
     PopularProductsComponent,
     ProductZoomComponent,
- 
+    CategoryfilterComponent,
+    ColorFilterComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +53,8 @@ import { ProductZoomComponent } from './products/product-details/product-zoom/pr
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxPaginationModule,
-    NgxImageZoomModule.forRoot() // <-- Add this line
+    BrowserAnimationsModule,
+    NgxImageZoomModule.forRoot() 
 
   ],
   exports: [

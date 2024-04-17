@@ -17,9 +17,9 @@ export class Product {
   description?: string;
   stock?: number;
   newPro?: boolean;
-  brand?: string;
+  brand?: number;
   sale?: boolean;
-  category?: string;
+  category?: number;
   tags?: ProductTags[];
   colors?: ProductColor[];
 
@@ -34,9 +34,9 @@ export class Product {
     description?: string,
     stock?: number,
     newPro?: boolean,
-    brand?: string,
+    brand?: number,
     sale?: boolean,
-    category?: string,
+    category?: number,
     tags?: ProductTags[],
     colors?: ProductColor[]
   ) {

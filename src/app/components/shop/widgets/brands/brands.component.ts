@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-
+import { BrandService } from '../../../../services/brand-service/brand.service';
 
 @Component({
   selector: 'app-brands',
@@ -8,20 +8,34 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class BrandsComponent implements OnInit {
 
-  // brands: string[] = ['all', 'Lenovo', 'Dell', 'Dell', 'Lg', 'Samsung'];
-  brands: string[] = ['all', 'Brand-1', 'Brand-2', 'Brand-3', 'Brand-4', 'Brand-5'];
+  brands: any[] = [];
 
   @Output() brandChanged = new EventEmitter();
-  constructor() { }
+
+  constructor(private brandService: BrandService) { }
 
   ngOnInit() {
+    this.loadBrands();
   }
 
-
-  brendSelect(event) {
-  this.brandChanged.emit(
-    event.value
-  );
+  loadBrands() {
+    this.brandService.getAllBrands()
+      .subscribe(
+        (data: any[]) => {
+          if (Array.isArray(data) && data.length >= 2 && Array.isArray(data[1])) {
+            this.brands = data[1];
+            console.log('Brands:', this.brands);
+          } else {
+            console.error('Unexpected response format:', data);
+          }
+        },
+        (error) => {
+          console.error('Error loading brands:', error);
+        }
+      );
   }
 
+  brandSelect(event) {
+    this.brandChanged.emit(event.value);
+  }
 }

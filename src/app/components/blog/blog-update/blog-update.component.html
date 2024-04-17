@@ -1,0 +1,42 @@
+
+<mat-card class="center-card">
+   
+    <div class="title">
+      <h3>Update Your Blog</h3>
+    </div>
+    <br>
+      <mat-card-content>
+          <div style="margin: 25px;">
+              <form [formGroup]="editForm" id="editForm" name="editForm">
+                  <mat-form-field class="w-100" >
+                      <input matInput placeholder="Title" formControlName="title" required>
+                    </mat-form-field>            
+                <mat-form-field  class="w-100">
+                  <mat-label>Image</mat-label>
+                  <div class="fileUploadContainer" [ngStyle]="{'margin-top' : editForm.get('image')!.value ? '5px' :  '20px'}">
+                    <ng-container *ngIf="editForm.get('image')!.value">
+                      <img [src]="editForm.get('image')!.value || editForm.image"  />
+                      <button class="deleteButton" mat-icon-button (click)="fileInput.value = ''; editForm.get('image')?.setValue(null);">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </ng-container>               
+                    <div *ngIf="!editForm.get('image')!.value" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+                      <mat-icon style="opacity: 60%;">file_upload</mat-icon>
+                      <button mat-raised-button color="primary" style="width:100%; opacity: 80%;">Browser</button>
+                      <small style="margin: 20px">Drag and drop here</small>
+                    </div>             
+                    <input #fileInput class="fileInput" type="file" multiple="multiple" accept="image/*"
+                      (change)="setFileData($event)" />
+                  </div>
+                  <input matInput formControlName="image" readonly [hidden]="true " />
+                </mat-form-field>       
+              <mat-form-field  class="w-100">
+                  <textarea placeholder="Description" matInput rows="5" formControlName="description" required></textarea>
+              </mat-form-field> 
+                <button  class="btn-project" mat-raised-button color="accent" style="float : right;"
+                [disabled]="!editForm.valid" (click)="updateBlog()">Edit Blog</button>       
+              </form>
+          </div>
+      </mat-card-content>
+    
+    </mat-card>

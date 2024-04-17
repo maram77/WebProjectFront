@@ -30,9 +30,9 @@ export class AdminGuard implements CanActivate {
   };
   private openSnackBar(message: string): void {
     this.snackBar.open(message, 'Close', {
-      duration: 3000, // Duration in milliseconds
-      horizontalPosition: 'center', // Position horizontally
-      verticalPosition: 'top', // Position vertically
+      duration: 3000, 
+      horizontalPosition: 'center', 
+      verticalPosition: 'top', 
     });
   }
 }

@@ -16,8 +16,6 @@ export class MenuComponent implements OnInit {
     this.user.firstname = LocalStorageService.getUser().firstname;
     this.user.lastname = LocalStorageService.getUser().lastname;
     this.user.role = LocalStorageService.getUser().role;
-    console.log(this.user.role)
-
   }
   openMegaMenu(){
     let pane = document.getElementsByClassName('cdk-overlay-pane');

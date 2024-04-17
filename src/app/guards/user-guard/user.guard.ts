@@ -13,11 +13,9 @@ export class UserGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    // Check if the user is logged in
     if (LocalStorageService.isUserLoggedIn()) {
-      return true; // User is logged in, allow access to the route
+      return true; 
     } else {
-      // User is not logged in, redirect to the login page
       return this.router.createUrlTree(['/home']);
     }
   }

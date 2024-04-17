@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/components/shared/services/product.service';
+import { ProductService } from '../../../../services/product-service/product.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Product, ColorFilter } from 'src/app/modals/product.model';
+import { Product, ColorFilter } from 'src/app/modals/product';
+
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -10,8 +11,8 @@ import { Product, ColorFilter } from 'src/app/modals/product.model';
 })
 export class ProductLeftSidebarComponent implements OnInit {
   public sidenavOpen:boolean = true;
-  public animation    :   any;   // Animation
-  public sortByOrder  :   string = '';   // sorting
+  public animation    :   any;
+  public sortByOrder  :   string = '';
   public page:any;
   public tagsFilters  :   any[] = [];
   public viewType: string = 'grid';
@@ -28,12 +29,12 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         const category = params['category'];
-        this.productService.getProductByCategory(category).subscribe(products => {
+       /* this.productService.getProductsByCategory(category).subscribe(products => {
        this.allItems = products;
-       this.products = products.slice(0.8);
+       this.products = products;
        this.getTags(products)
        this.getColors(products)
-        })
+        })*/
       }
     )
   }
@@ -63,8 +64,8 @@ export class ProductLeftSidebarComponent implements OnInit {
       var uniqueColors = []
       var itemColor = Array();
       products.map((product, index) => {
-        if(product.colors) {
-        product.colors.map((color) => {
+        if(product.color) {
+        product.color.map((color) => {
             const index = uniqueColors.indexOf(color);
             if(index === -1)  uniqueColors.push(color);
         })
@@ -77,7 +78,18 @@ export class ProductLeftSidebarComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      const category = params['category'];
+      this.productService.getAll().subscribe(products => {
+        this.allItems = products;
+        this.products = products;
+        this.getColors(products);
+        console.log('All Products:', this.products);
+
+      });
+    });
   }
+
 
 
 
@@ -110,11 +122,11 @@ export class ProductLeftSidebarComponent implements OnInit {
    }
 
      // Initialize filetr Items
-  public filterItems(): Product[] {
+  /*public filterItems(): Product[] {
     return this.items.filter((item: Product) => {
         const Colors: boolean = this.colorFilters.reduce((prev, curr) => { // Match Color
-          if(item.colors){
-            if (item.colors.includes(curr.color)) {
+          if(item.color){
+            if (item.color.includes(curr.color)) {
               return prev && true;
             }
           }
@@ -129,7 +141,7 @@ export class ProductLeftSidebarComponent implements OnInit {
         return Colors && Tags; // return true
     });
 
-}
+}*/
 
 public onPageChanged(event){
   this.page = event;
@@ -162,15 +174,66 @@ public onPageChanged(event){
      console.log(this.products);
 
 }
+selectedCategory: any;
+selectedBrand : any;
+onCategoryChanged(selectedCategory: any) {
+  console.log('Selected Category:', selectedCategory);
+  this.selectedCategory = selectedCategory;
+  const selectedCategoryId = selectedCategory.idCategory;
+  console.log('idcategory:', selectedCategoryId);
+  console.log('All Products:', this.products);
 
-onBrendsChanged(newBrend) {
-  console.log(newBrend);
-  this.allItems = newBrend === 'all' ? this.products : this.products.filter(
-
-    item => item.brand === newBrend
-  )
-  console.log(this.allItems);
-
-
+  if (selectedCategory === 'all') {
+    this.allItems = this.products;
+  } else {
+    this.allItems = this.products.filter(product => product.category === selectedCategoryId);
+    console.log('Filtered Products by Category:', this.allItems);
+  }
 }
+
+onBrandsChanged(selectedBrand: any) {
+  console.log('Selected Brand:', selectedBrand);
+  this.selectedBrand = selectedBrand;
+  const selectedBrandId = selectedBrand.idBrand;
+  console.log('idbrand:', selectedBrandId);
+  if (selectedBrand === 'all') {
+    this.allItems = this.products;
+  } else {
+    this.allItems = this.products.filter(product => {
+      if (this.selectedCategory) {
+        return product.brand === selectedBrandId && product.category === this.selectedCategory.idCategory;
+      } else {
+        return product.brand === selectedBrandId;
+      }
+    });
+        console.log('Filtered Products by Brand and Category:', this.allItems);
+  }
+}
+onColorChanged(selectedColors: string[]) {
+  console.log('Selected Colors:', selectedColors);
+
+  if (selectedColors.length === 0) {
+    this.allItems = this.products;
+    console.log('Showing all products:', this.allItems);
+  } else {
+    this.allItems = this.products.filter(product => {
+      let colorMatch = selectedColors.includes(product.color);
+      let categoryMatch = !this.selectedCategory || product.category === this.selectedCategory.idCategory;
+      let brandMatch = !this.selectedBrand || product.brand === this.selectedBrand.idBrand;
+
+      if (this.selectedCategory || this.selectedBrand) {
+        return colorMatch && categoryMatch && brandMatch;
+      } else {
+        return colorMatch;
+      }
+    });
+    console.log('Filtered products:', this.allItems);
+  }
+}
+
+
+
+
+
+
 }

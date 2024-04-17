@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ShopModule } from './components/shop/shop.module';
 import { SharedModule } from './components/shared/shared.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CartService } from './services/cart-service/cart.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AppRoutingModule,
     NgxImgZoomModule,
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

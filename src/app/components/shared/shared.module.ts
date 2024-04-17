@@ -23,7 +23,6 @@ import { MatTableModule } from '@angular/material';
 import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menu/menu.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { ProductService } from './services/product.service';
 import { CartService } from './services/cart.service';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BannersComponent } from './banners/banners.component';
@@ -110,9 +109,6 @@ import { CategoriesSectionComponent } from './categories-section/categories-sect
     CategoriesSectionComponent,
 
   ],
-  providers: [
-    ProductService,
-    CartService
-  ]
+  providers: [ ]
 })
 export class SharedModule {}

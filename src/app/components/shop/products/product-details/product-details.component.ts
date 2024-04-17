@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Product } from 'src/app/modals/product.model';
-import { ProductService } from 'src/app/components/shared/services/product.service';
+import { Product } from 'src/app/modals/product';
+import { ProductService } from '../../../../services/product-service/product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { CartService } from 'src/app/components/shared/services/cart.service';
+import { CartService } from '../../../../services/cart-service/cart.service';
 import { SwiperDirective, SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ProductZoomComponent } from './product-zoom/product-zoom.component';
-
+import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
 
 @Component({
   selector: 'app-product-details',
@@ -16,6 +16,7 @@ import { ProductZoomComponent } from './product-zoom/product-zoom.component';
 export class ProductDetailsComponent implements OnInit {
 
   public config: SwiperConfigInterface={};
+  user: any = {}; 
   @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('zoomViewer', { static: true }) zoomViewer;
@@ -31,21 +32,29 @@ export class ProductDetailsComponent implements OnInit {
 
   index: number;
   bigProductImageIndex = 0;
+  brandName: string;
 
+  cartId : number;
   constructor(private route: ActivatedRoute, public productsService: ProductService, public dialog: MatDialog, private router: Router, private cartService: CartService) {
     this.route.params.subscribe(params => {
-      const id = +params['id'];
-      this.productsService.getProduct(id).subscribe(product => this.product = product)
+      const id = params['id'];
+      this.productsService.getProductByReference(id).subscribe(product => {
+        this.product = product;
+        console.log('Product from API:', this.product);
+        this.loadBrandName();
+      });
     });
    }
 
   ngOnInit() {
-    this.productsService.getProducts().subscribe(product => this.products = product);
-
-
+    this.productsService.getProducts().subscribe(products => {
+      console.log('Products received:', products); 
+      this.products = products;
+    });
     this.getRelatedProducts();
-  }
+    this.user.id = LocalStorageService.getUser().id;
 
+  }
 
   ngAfterViewInit() {
     this.config = {
@@ -118,17 +127,30 @@ getRelatedProducts() {
       this.products = product
     });
 }
-
-  // Add to cart
-  public addToCart(product: Product, quantity) {
+fetchCartItems() {
+  this.cartService.getCartByUserId(this.user.id).subscribe(
+    (cart) => {
+      if (cart) {
+        this.cartId = cart.cartId; 
+        console.log("cartId",this.cartId)
+        this.cartService.getProductsAndQuantities(this.cartId);
+      } else {
+        console.error('Cart not found for user');
+      }
+    },
+    error => {
+      console.error('Error fetching cart:', error);
+    }
+  );
+}
+  public addToCart(user:number, productReference: string, quantity) {
     if (quantity == 0) return false;
-    this.cartService.addToCart(product, parseInt(quantity));
+    this.cartService.addToCart(this.user.id,productReference, parseInt(quantity));
   }
 
-   // Add to cart
    public buyNow(product: Product, quantity) {
     if (quantity > 0)
-      this.cartService.addToCart(product,parseInt(quantity));
+      this.cartService.addToCart(this.user.id,product.productReference,parseInt(quantity));
       this.router.navigate(['/pages/checkout']);
  }
 
@@ -162,7 +184,19 @@ public openZoomViewer(){
     panelClass: 'zoom-dialog'
   });
 }
+  loadBrandName() {
+    console.log('Product Reference:', this.product.productReference); 
 
+    this.productsService.getBrandByProductReference(this.product.productReference).subscribe(
+      (brand) => {
+        this.brandName = brand.brandName;
+        console.log('brand name : ', this.brandName)
+      },
+      (error) => {
+        console.error('Error loading brand name:', error);
+      }
+    );
+  }
 
 
 }

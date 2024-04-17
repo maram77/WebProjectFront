@@ -58,7 +58,7 @@ export class MyAccountComponent {
       if(LocalStorageService.isAdminLoggedIn()){
         this.router.navigateByUrl("/admin/dashboard");
       } else if (LocalStorageService.isUserLoggedIn()) {
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("");
       }
     }, error => {
       console.log(error);

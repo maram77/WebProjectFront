@@ -1,4 +1,4 @@
-<div class="vertical-products sec-padding">
+<div class="vertical-products sec-padding" *ngIf="products">
   <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" class="p-0">
       <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel">
         <div class="widget-column">
@@ -8,7 +8,7 @@
               <ul class="product-list">
                 <li *ngFor="let product of products | slice:0:3 " fxLayout="row">
                   <div class="media-image">
-                    <a [routerLink]="['/home/product', product.id]"><img [src]="product.pictures[0].big" class="small" alt=""> </a>
+                    <a [routerLink]="['/home/product']"><img [src]="" class="small" alt=""> </a>
                   </div>
                   <div class="media-body">
                     <a [routerLink]="['/home/product', product.id]"><span>{{product.name}}</span></a>
@@ -25,18 +25,18 @@
               </ul>
         </div>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel">
+      <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel" *ngIf="products">
           <div class="widget-column">
               <div class="title">
                   <h4 class="widget-title">Top Selling Products</h4>
                 </div>
                 <ul class="product-list">
-                  <li *ngFor="let product of products | slice:6:9 " fxLayout="row">
+                  <li *ngFor="let product of products | slice:0:3 " fxLayout="row">
                     <div class="media-image">
-                      <a [routerLink]="['/home/product', product.id]"><img [src]="product.pictures[0].big" class="small" alt=""> </a>
+                      <a [routerLink]="['/home/product']"><img [src]="" class="small" alt=""> </a>
                     </div>
                     <div class="media-body">
-                      <a [routerLink]="['/home/product', product.id]"><span>{{product.name}}</span></a>
+                      <a [routerLink]="['/home/product']"><span>{{product.name}}</span></a>
                       <div class="stars">
                           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
                           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
@@ -50,18 +50,18 @@
                 </ul>
           </div>
         </div>
-        <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel">
+        <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel" *ngIf="products">
             <div class="widget-column">
                 <div class="title">
                     <h4 class="widget-title">Hot Offer</h4>
                   </div>
                   <ul class="product-list">
-                    <li *ngFor="let product of products | slice:9:12 " fxLayout="row">
+                    <li *ngFor="let product of products | slice:0:3 " fxLayout="row">
                       <div class="media-image">
-                        <a ><img [routerLink]="['/home/product', product.id]" [src]="product.pictures[0].big" class="small" alt=""> </a>
+                        <a ><img [routerLink]="['/home/product']" [src]="" class="small" alt=""> </a>
                       </div>
                       <div class="media-body">
-                       <a [routerLink]="['/home/product', product.id]"><span>{{product.name}}</span></a>
+                       <a [routerLink]="['/home/product']"><span>{{product.name}}</span></a>
                         <div class="stars">
                             <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
                             <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
@@ -69,7 +69,7 @@
                             <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
                             <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
                          </div>
-                         <p class="price">{{product.price | number : '1.2-2'}}</p>
+                         <p class="price">{{product.price }}</p>
                       </div>
                     </li>
                   </ul>

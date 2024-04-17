@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/modals/product.model';
-import { CartItem } from 'src/app/modals/cart-item';
-import { ProductService } from '../../shared/services/product.service';
-import { CartService } from '../../shared/services/cart.service';
+import { Product } from 'src/app/modals/product';
+import { ProductService } from '../../../services/product-service/product.service';
+import { CartService } from '../../../services/cart-service/cart.service'
 
 @Component({
   selector: 'app-home-two',
@@ -15,7 +14,7 @@ export class HomeComponent implements OnInit {
   products: Product[];
   public banners = [];
 
-  shoppingCartItems: CartItem[] = [];
+  shoppingCartItems: Product[] = [];
   wishlistItems  :   Product[] = [];
 
   public featuredProducts: Array<Product>;
@@ -34,18 +33,28 @@ export class HomeComponent implements OnInit {
   constructor(private productService: ProductService, private cartService: CartService) { }
 
   ngOnInit() {
-    this.cartService.getItems().subscribe(shoppingCartItems => this.shoppingCartItems = shoppingCartItems);
-    this.productService.getProducts()
-    .subscribe(
-      (product: Product[]) => {
-        this.products = product;
-      }
-    )
+    this.fetchProducts();
+
     this.productService.getBanners()
     .subscribe(
       data => this.banners = data
     );
   }
+
+ fetchProducts() {
+  this.productService.getAllProducts().subscribe(
+    (data: any[]) => {
+      this.shoppingCartItems = data[1];
+      this.products = data[1];
+      console.log(data[1]);
+    },
+    error => {
+      console.error('Error fetching cart items:', error);
+    }
+  );
+}
+
+
 
 
 

@@ -1,11 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {Product} from "../../modals/product.model";
-import {CartItem} from "../../modals/cart-item";
-import {ProductService} from "../shared/services/product.service";
-import {CartService} from "../shared/services/cart.service";
+import {CartService} from "../../services/cart-service/cart.service";
 import { Router, NavigationEnd } from '@angular/router';
 import { SidebarMenuService } from '../shared/sidebar/sidebar-menu.service';
 import { SidenavMenu } from '../shared/sidebar/sidebar-menu.model';
+import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
 
 @Component({
   selector: 'app-main',
@@ -15,16 +14,25 @@ import { SidenavMenu } from '../shared/sidebar/sidebar-menu.model';
 export class MainComponent implements OnInit {
 
   public sidenavMenuItems:Array<any>;
+
+  public currencies = ['USD', 'EUR'];
+  public currency:any;
+  public flags = [
+    { name:'English', image: 'assets/images/flags/gb.svg' },
+    { name:'German', image: 'assets/images/flags/de.svg' },
+    { name:'French', image: 'assets/images/flags/fr.svg' },
+    { name:'Russian', image: 'assets/images/flags/ru.svg' },
+    { name:'Turkish', image: 'assets/images/flags/tr.svg' }
+  ]
+  public flag:any;
   products: Product[];
   indexProduct: number;
-  shoppingCartItems: CartItem[] = [];
-
+  shoppingCartItems: Product[] = [];
   public banners = [];
-
   wishlistItems  :   Product[] = [];
-
   public url : any;
-
+  cartId : number;
+  user: any = {}; 
   navItems: SidenavMenu[] = [
     {
       displayName: 'Home',
@@ -235,21 +243,83 @@ export class MainComponent implements OnInit {
           route: '/pages/contact'
     }
   ];
+ 
+  fetchCartItems() {
+    this.cartService.getCartByUserId(this.user.id).subscribe(
+        (cart) => {
+            if (cart) {
+                this.cartId = cart.cartId;
+                console.log("cartId", this.cartId);
+                if (this.cartId) {
+                    // Ensure cartId is valid before making the request
+                    this.fetchProductsAndQuantities();
+                } else {
+                    console.error('No cartId available');
+                }
+            } else {
+                console.error('Cart not found for user');
+            }
+        },
+        error => {
+            console.error('Error fetching cart:', error);
+        }
+    );
+}
 
-  constructor(public router: Router, private cartService: CartService, public sidenavMenuService:SidebarMenuService) {
-    this.cartService.getItems().subscribe(shoppingCartItems => this.shoppingCartItems = shoppingCartItems);
-    this.router.events.subscribe((event) => {
+fetchProductsAndQuantities() {
+    this.cartService.getProductsAndQuantities(this.cartId).subscribe(
+        (response: any[]) => {
+            if (Array.isArray(response) && response.length >= 2 && Array.isArray(response[1])) {
+                const items = response[1];
+                this.shoppingCartItems = items;
+                console.log(items);
+            } else {
+                console.error('Unexpected response format:', response);
+            }
+        },
+        error => {
+            console.error('Error fetching cart items:', error);
+        }
+    );
+}
+constructor(public router: Router, private cartService: CartService, public sidenavMenuService: SidebarMenuService) {
+  this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.url = event.url;
+          this.url = event.url;
       }
-    } )
+  })
+
+  if (this.cartId) {
+      this.fetchProductsByCartId();
   }
+}
+
+fetchProductsByCartId() {
+  this.cartService.getProductsByCartId(this.cartId).subscribe(
+      shoppingCartItems => {
+          this.shoppingCartItems = shoppingCartItems;
+      },
+      error => {
+          console.error('Error fetching products by cartId:', error);
+      }
+  );
+}
 
   ngAfterViewInit() {
   }
 
   ngOnInit() {
- 
+    this.currency = this.currencies[0];
+    this.flag = this.flags[0];
+    this.user.id = LocalStorageService.getUser().id;
+
   }
 
+ 
+  public changeCurrency(currency){
+    this.currency = currency;
+  }
+  public changeLang(flag){
+    this.flag = flag;
+  }
 }

@@ -15,6 +15,8 @@ import {ResetPasswordComponent} from './reset-password/reset-password.component'
 import {VerificationEmailComponent} from './verification-email/verification-email.component'
 import {SetNewPasswordComponent} from './set-new-password/set-new-password.component'
 import { NoAuthGuard } from 'src/app/guards/no-auth-guard/no-auth.guard';
+import { AdminGuard } from 'src/app/guards/admin-guard/admin.guard';
+import { AuthGuard } from 'src/app/guards/auth-guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -28,7 +30,7 @@ const routes: Routes = [
       { path: 'wishlist', component: WishlistComponent },
       { path: 'compare', component: CompareComponent },
       { path: 'my-account', component: MyAccountComponent,canActivate: [NoAuthGuard] },
-      { path: 'edit-account', component: EditAccountComponent, canActivate: [UserGuard] },
+      { path: 'edit-account', component: EditAccountComponent, canActivate: [AuthGuard] },
       { path: 'error', component: ErrorPageComponent },
       { path: 'reset-password', component: ResetPasswordComponent, canActivate: [NoAuthGuard] },
       { path: 'verification-email', component: VerificationEmailComponent, canActivate: [NoAuthGuard]},

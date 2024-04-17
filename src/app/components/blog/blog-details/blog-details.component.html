@@ -1,191 +1,113 @@
-<<<<<<< HEAD
-<div class="blog-details">
-  <div class="container">
-    <div class="blog-list-wrapper sec-padding" fxLayout="row" fxLayout.lt-md="column">
-        <div fxFlex="100" fxFlex.gt-sm="70"  class="main-blog-panel">
-            <div class="single-blog-list" >
-                <div  class="image-box">
-                  <img src="assets/images/blog/b3.jpg" alt="">
-                </div>
-                <div class="text-box">
-                  <h4>Our Outstanding Services</h4>
-                  <ul class="post-info" fxLayout="row">
-                    <li><i class="material-icons">access_time </i>Aug 21, 2015</li>
-                    <li><i class="material-icons">person </i>Marc Spenser</li>
-                    <li><i class="material-icons">sms</i>05 Comments</li>
-                  </ul>
-                  <p>Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In iaculis viverra neque Benenatis mauris Vestibulum ante ipsum primis in industry, logistics, finance, business orci ultrices venenatis mauris. It is a long established fact that a reader will be distracted.</p>
-                  <p>Nullam et lacus ultricies, egestas dolor vel, consequat magna. Curabitur tellus mauris, lacinia in dolor sit amet, sollicitudin efficitur quam. Praesent vel dolor non tortor blandit mollis et a lacus. Nulla id congue sem. Vestibulum orci ligula, sollicitudin nec dignissim a, porttitor ac elit. Nam consequat quam mauris, sit amet convallis sapien venenatis nec.</p>
-                  <div class="share-box">
-                    <ul class="tag-box pull-left">
-                        <li>Tags: </li>
-                        <li><a href="http://wp1.themexlab.com/newwp/experts/tag/business/" rel="tag">Business </a></li>
-                        <li><a href="http://wp1.themexlab.com/newwp/experts/tag/consulting/" rel="tag">Consulting </a></li>
-                        <li><a href="http://wp1.themexlab.com/newwp/experts/tag/seminar/" rel="tag">Seminar </a></li>
-                    </ul>
-                    <div class="social-box pull-right">
-                        <ul class="list-inline social">
-                            <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                            <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href=""><i class="fa fa-pinterest"></i></a></li>
-                        </ul>
+
+<div *ngIf="blogData" class="card-container">
+    <div class="blog-details">
+      <div class="container">
+        <div class="blog-list-wrapper sec-padding" fxLayout="row" fxLayout.lt-md="column">
+            <div fxFlex="100" fxFlex.gt-sm="70"  class="main-blog-panel">
+                <div class="single-blog-list">
+                    <div style="text-align: right;"  *ngIf="blogData.user.id == user.id">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="openEditForm(blogData)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item (click)="deleteBlog(blogData)" >
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                        </mat-menu>
                     </div>
-                </div>
-               </div>
-               <div class="author-box">
-                <div class="post-author">
-                  <div class="inner">
-                      <div class="img-box">
-                          <img class="img-responsive" src="assets/images/about-us/t2.jpg">
-                      </div>
-                      <div class="text-box">
-                          <h5>Robert Davison</h5>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim ornare nisi vitae.</p>
-                      </div>
-                  </div>
-              </div>
-               </div>
-               <div class="comments-area">
-                <div class="group-title">
-                    <h3>Read Comments</h3>
-                </div>
-                <!--Comment Box-->
-                <div class="comment-box">
-                    <div class="comment">
-                        <div class="author-thumb"><img src="assets/images/about-us/t2.jpg" alt=""></div>
-                        <div class="comment-inner">
-                            <div class="comment-info clearfix">Steven Rich – Sep 17, 2016:</div>
-                            <div class="rating">
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star light"></span>
+               
+                    <div class="text-box">
+                      <h4>{{blogData.title}}</h4>
+                      <ul class="post-info" fxLayout="row">
+                        <li><i class="material-icons">access_time </i> {{blogData.created_on | date:'medium'}}</li>
+                        <li><i class="material-icons">person </i>{{blogData.user.firstname}} {{blogData.user.lastname}}</li>
+       
+                      </ul>
+    
+                      <img mat-card-image [src]="Image" height="300px" style="  width: 300px;
+                      height: 200px;
+                      object-fit: cover;
+                      margin: 15px;
+                      background-image: url('assets/images/blog/b1.jpg'); 
+                      background-size: cover;"/>
+                      
+                      <p> {{blogData.description}}</p>
+                      <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="likeBlog()" >{{blogData.countLike}} <mat-icon>favorite</mat-icon></button>
+                        <button mat-raised-button color="primary" style="margin-left: 5px;">{{blogData.countView}} <mat-icon>remove_red_eye</mat-icon></button>
+                      </mat-card-actions>
+                   
+                   </div>
+             
+                   <div class="comments-area">
+                    <div class="group-title">
+                        <h3>Read Comments</h3>
+                    </div>
+                    <!--Comment Box-->
+                    <div class="comment-box" *ngFor="let comment of comments">
+                        
+                        <div class="comment">
+                            <div class="author-thumb"><img src="assets/images/about-us/t2.jpg" alt=""></div>
+                            <div class="comment-inner">
+                                <div class="comment-info clearfix">{{comment.user.firstname}} {{comment.user.lastname}} – {{comment.created_on | date:'medium'}}</div>                           
+                                    <div class="rating" *ngIf="comment.user.id == user.id">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                          <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                          <div *ngIf="!comment.isEditing">
+                                          <button mat-menu-item (click)="toggleEditMode(comment)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                          </button>
+                                        </div>
+                                          <button mat-menu-item (click)="deleteComment(comment)" >
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Delete</span>
+                                          </button>
+                                        </mat-menu>
+                                    </div>
+                                <div class="text">
+                                    <div *ngIf="comment.isEditing">
+                                        <mat-form-field appearance="fill">
+                                          <textarea matInput [(ngModel)]="comment.content"></textarea>
+                                        </mat-form-field>
+                                        <button mat-raised-button color="primary" (click)="updateComment(comment)">Save</button>
+                                      </div>
+                                      <div *ngIf="!comment.isEditing">
+                                      {{comment.content}}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text">How all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings.</div>
                         </div>
                     </div>
                 </div>
-
-                <div class="comment-box reply-comment">
-                    <div class="comment">
-                        <div class="author-thumb"><img src="assets/images/about-us/t3.jpg" alt=""></div>
-                        <div class="comment-inner">
-                            <div class="comment-info clearfix">William Cobus – Aug 21, 2016:</div>
-                            <div class="rating">
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star-half-empty"></span>
-                            </div>
-                            <div class="text">There anyone who loves or pursues or desires to obtain pain itself, because it is pain sed, because occasionally circumstances occur some great pleasure.</div>
-                        </div>
+          
+                <div *ngIf="isUserLoggedIn() || isAdminLoggedIn()" class="contact-form">
+                    <div class="header-title">
+                        <h3>Add Your Comments</h3>
                     </div>
+                    <form [formGroup]="commentForm" fxLayout="row wrap">
+                      <div [ngClass]="{'mt-20': true, 'mt-10': true, 'mt-1': true}" fxFlex="100" fxFlex.gt-sm="100" class="px-1">
+                        <mat-form-field class="w-100">
+                          <textarea placeholder="Post content" matInput formControlName="content"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1">
+                        <button class="btn-project" mat-raised-button color="accent" (click)="publishComment()" [disabled]="!commentForm.valid" >Publish Comment</button>
+                      </div>
+                    </form>
                 </div>
-            </div>
-            <div class="contact-form">
-                <div class="header-title">
-                    <h3>Add Your Comments</h3>
                 </div>
-              <form fxLayout="row wrap">
-                <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="mt-20 pr-5" ngClass.sm="mt-10" ngClass.xs="mt-10">
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="First name (required)" #name="ngModel" ngModel name="name" required>
-                        <mat-error *ngIf="name.invalid">Please enter a valid message</mat-error>
-                      </mat-form-field>
-                </div>
-                <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="pl-5 mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Last name (required)" #email="ngModel" ngModel name="email" required>
-                        <mat-error *ngIf="email.invalid">Please enter a valid message</mat-error>
-                      </mat-form-field>
-                </div>
-
-                <div  fxFlex="100"  class="mt-20 pr-5" ngClass.sm="mt-10" ngClass.xs="mt-10">
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Email Address (required)" #email="ngModel" ngModel name="email" required>
-                        <mat-error *ngIf="email.invalid">Please enter a valid message</mat-error>
-                      </mat-form-field>
-                </div>
-
-                <div  fxFlex="100" fxFlex.gt-sm="100" class="mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
-                    <mat-form-field class="w-100">
-                        <textarea placeholder="Post content" matInput rows="4" ngModel name="content"></textarea>
-                      </mat-form-field>
-                </div>
-                <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
-                    <button class="btn-project" mat-raised-button color="accent" type="submit">Submit Review</button>
-                  </div>
-                </form>
-            </div>
-            </div>
-         </div>
-         <div fxFlex="100" fxFlex.gt-sm="30" class="sidebar">
-            <div class="blog-sidebar">
-                <div class="search mb-30">
-                    <input class="form-control" placeholder="Search..." type="search">
-                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i> </button>
-                </div>
-                <div class="single-sidebar-widget mb-30">
-                    <div class="post-widget">
-                        <div class="title">
-                            <h4>Latest News</h4>
-                            <div class="decor-line"></div>
-                        </div>
-                        <ul>
-                            <li fxLayout="row">
-                                <div fxFlex="100" fxFlex.gt-sm="30" class="icon-box"><img src="assets/images/blog/b1.jpg" alt="Awesome Image"></div>
-                                <div fxFlex="100" fxFlex.gt-sm="70" class="text-box">
-                                    <h5><a href="#">How To Reduce Financial Stress </a></h5><span>02 Dec.</span>
-                                </div>
-                            </li>
-                            <li fxLayout="row">
-                                <div fxFlex="100" fxFlex.gt-sm="30" class="icon-box"><img src="assets/images/blog/b2.jpg" alt="Awesome Image"></div>
-                                <div fxFlex="100" fxFlex.gt-sm="70" class="text-box">
-                                    <h5><a href="#">What Makes A Financial Website Successful? </a></h5><span>02 Dec.</span>
-                                </div>
-                            </li>
-                            <li fxLayout="row">
-                                <div fxFlex="100" fxFlex.gt-sm="30" class="icon-box"><img src="assets/images/blog/b3.jpg" alt="Awesome Image"></div>
-                                <div fxFlex="100" fxFlex.gt-sm="70" class="text-box">
-                                    <h5><a href="#">What Makes A Financial Service’s Website Successful? </a></h5><span>02 Dec.</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="single-sidebar-widget mb-30">
-                    <div class="post-widget">
-                        <div class="title">
-                            <h4>Text widget</h4>
-                        </div>
-                      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolore que laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arch itecto beatae vitae dict eaque ipsa quae.</p>
-                    </div>
-                </div>
-                <div class="single-sidebar-widget mb-30">
-                    <div class="tags-widget post-widget">
-                        <div class="title">
-                            <h4>Tags widget</h4>
-                        </div>
-                        <ul class="list-inline">
-                            <li><a href="#">Insurance</a></li>
-                            <li><a href="#">Investments</a></li>
-                            <li><a href="#">tax plans</a></li>
-                            <li><a href="#">Mutual funds</a></li>
-                            <li><a href="#">Retirement plans</a></li>
-                            <li><a href="#">Busniess plans</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-         </div>
+             </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-=======
-<p>
-  blog-details works!
-</p>
->>>>>>> 33207d3c8114c1fca4fa8fa33a3d65f9f441f511
+    </div>
+    
+    

@@ -7,9 +7,10 @@ import { HomeComponent } from './home/home.component';
 
 // Routes
 const routes: Routes = [
-  { path: '', component: HomeComponent }, 
+  { path: '', component: HomeComponent },
   { path: 'products/:category', component: ProductLeftSidebarComponent },
   { path: 'product/:id', component: ProductDetailsComponent }
+
 
 
 ];
