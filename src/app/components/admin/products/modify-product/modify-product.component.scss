@@ -1,0 +1,55 @@
+.dialog-container {
+  max-width: 600px; /* Maximum width */
+  margin: 0 auto;
+  padding: 20px;
+  height: 400px; /* Fixed height */
+  overflow-y: auto; /* Vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.dialog-form {
+  width: auto; /* Adjust width to fit content */
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-control-file {
+  width: auto;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; 
+}
+
+button[type="submit"],
+button[type="button"] {
+  margin-left: auto;
+  margin-right: auto;
+  height: auto; 
+}
+
+.mat-raised-button {
+  min-width: auto;
+}
+
+.mat-raised-button.mat-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.mat-raised-button.mat-accent {
+  background-color: #6c757d; 
+  color: #fff;
+}

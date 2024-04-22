@@ -6,6 +6,7 @@ import { Product } from 'src/app/modals/product';
 import { ProductWithQuantityDto } from 'src/app/modals/ProductWithQuantityDto';
 import { Delivery } from 'src/app/modals/delivery';
 import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-checkout',
@@ -25,7 +26,8 @@ export class CheckoutComponent implements OnInit {
   public shoppingCartItems: ProductWithQuantityDto[] = [];
   router: any;
   cartId : number;
-  constructor(private cartService: CartService, public productService: ProductService) { }
+  constructor(private cartService: CartService, public productService: ProductService,private snackBar: MatSnackBar
+  ) { }
 
 
   ngOnInit() {
@@ -74,12 +76,23 @@ export class CheckoutComponent implements OnInit {
               console.error('Error fetching cart items:', error);
             }
           );
+          this.openSnackBar("Checkout successful", 'success-snackbar');
           console.log('Checkout successful:', response);
         
         },
         error => {
           console.error('Checkout failed:', error);
+          this.openSnackBar('Checkout failed', 'error-snackbar');
+
         }
       );
+    }
+
+    openSnackBar(message: string, customClass: string) {
+      this.snackBar.open(message, 'Close', {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: ['custom-snackbar', customClass] 
+      });
     }
 }

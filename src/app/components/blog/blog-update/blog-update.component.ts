@@ -128,11 +128,18 @@ export class BlogUpdateComponent implements OnInit {
     editdata.id=this.data.id
     this.blogService.updateBlog(this.data.id,formData).subscribe(res=>{
       this.uploadImage(this.data.id);
-      this.snackBar.open("Blog Updated Successfully !","ok");
+      this.openSnackBar("Blog Updated Successfully !", 'success-snackbar');
       window.location.reload();
     }, error=>{
-      this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
     })
+  }
+  openSnackBar(message: string, customClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar', customClass] 
+    });
   }
   uploadImage(blogId: number) {
     if (this.fileToUpload) {
@@ -148,7 +155,4 @@ export class BlogUpdateComponent implements OnInit {
       console.error('image not exist');
     }
 }
-
-
-
 }

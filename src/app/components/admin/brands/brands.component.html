@@ -1,0 +1,39 @@
+<div class="sec-padding_brand">
+
+<div class="product-card">
+    <div>
+        <h3>Add New Brand</h3>
+        <mat-form-field>
+          <input matInput placeholder="New Brand Name" [(ngModel)]="newBrandName">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addNewBrand()" style="margin-left: 10px;">Add Brand</button>
+      </div>
+      
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Brand ID</th>
+                <th>Brand Name</th>
+                <th>Associated Products</th>
+                <th>Action</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let brand of brands">
+                <td>{{ brand.idBrand }}</td>
+                <td>{{ brand.brandName }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let product of brand.products">{{ product }}</li>
+                    </ul>
+                </td>
+                <td>
+                    <button class="delete-button" (click)="deleteBrand(brand.idBrand)">Delete</button>
+                    <button (click)="openModifyBrandDialog(brand.idBrand)">Modify</button>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

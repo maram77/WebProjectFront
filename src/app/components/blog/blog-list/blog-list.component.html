@@ -1,6 +1,6 @@
 <div class="blog-list">
     <div class="container">
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" class="blog-list-wrapper sec-padding">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" class="blog-list-wrapper sec-padding_blog">
           <div fxFlex="100" fxFlex.gt-sm="70" class="main-blog-panel">
           
               <div class="card-container" *ngFor="let item of (title.trim() === '' ? allBlogs : result)" >    
@@ -13,7 +13,7 @@
                         background-size: cover; ">
                       </div>
                       <div fxFlex="100" fxFlex.gt-sm="50" class="text-box">
-                          <a href=""> <h4>{{item.title}}</h4></a>
+                          <h4>{{item.title}}</h4>
                         <ul fxLayout="row">
                           <li><i class="material-icons">access_time</i>{{item.created_on | date:'medium'}}</li>
                           <li><i class="material-icons">person</i>{{item.user.firstname}} {{item.user.lastname}}</li>         

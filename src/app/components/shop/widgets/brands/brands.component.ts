@@ -22,8 +22,8 @@ export class BrandsComponent implements OnInit {
     this.brandService.getAllBrands()
       .subscribe(
         (data: any[]) => {
-          if (Array.isArray(data) && data.length >= 2 && Array.isArray(data[1])) {
-            this.brands = data[1];
+          if (Array.isArray(data)) {
+            this.brands = data;
             console.log('Brands:', this.brands);
           } else {
             console.error('Unexpected response format:', data);

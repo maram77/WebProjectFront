@@ -24,11 +24,18 @@ export class BlogDeleteComponent implements OnInit {
 
   deleteBlog(){
     this.BlogService.deleteBlog(this.data.id).subscribe(res=>{
-      this.snackBar.open("Blog deleted Successfully !","ok");
+      this.openSnackBar("Blog deleted Successfully !", 'success-snackbar');
       this.router.navigateByUrl('/blog-list');
     }, error=>{
-      this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
     })
+  }
+  openSnackBar(message: string, customClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar', customClass] 
+    });
   }
 }
 

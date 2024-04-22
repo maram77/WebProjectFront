@@ -46,14 +46,21 @@ export class BlogDetailsComponent implements OnInit {
   publishComment(){
     const content=this.commentForm.get('content')?.value;
 
-    this.commentService.createComment(this.blogId,this.user.id,content).subscribe(res=>{     
-       this.snackBar.open("Comment published Successfully !","ok");
-       this.getCommentsByBlog();
+    this.commentService.createComment(this.blogId,this.user.id,content).subscribe(res=>{   
+      this.openSnackBar("Comment published Successfully !", 'success-snackbar');
+         this.getCommentsByBlog();
      }, error=>{
-       this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
      })
   }
 
+  openSnackBar(message: string, customClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar', customClass] 
+    });
+  }
 
   getCommentsByBlog(){
     this.commentService.getAllCommentsByBlog(this.blogId).subscribe(res=>{     
@@ -61,26 +68,25 @@ export class BlogDetailsComponent implements OnInit {
       console.log(res);
       this.sortCommentsByDate(); 
      }, error=>{
-       this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
      })
   }
   
   getPostById(){
     this.BlogService.getBlogById(this.blogId).subscribe(res=>{     
       this.blogData = res;
-      console.log(res);
       this.getCommentsByBlog();
      }, error=>{
-       this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
      })
    }
 
   likeBlog(){
     this.BlogService.likeBlog(this.blogId).subscribe((response)=>{
-      this.snackBar.open("liked !","ok");
+      this.openSnackBar("liked !", 'success-snackbar');
       this.getPostById();
     }, (error)=>{
-      this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
     })
   }
 
@@ -123,10 +129,10 @@ export class BlogDetailsComponent implements OnInit {
 updateComment(comment: any) {
   this.commentService.updateComment(comment.id,comment.content).subscribe(
     (response) => {
-      this.snackBar.open("Comment updated Successfully!", "ok");
+      this.openSnackBar("Comment updated Successfully!", 'success-snackbar');
     },
     (error) => {
-      this.snackBar.open("Something Went Wrong!", "ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
     }
   );
   this.toggleEditMode(comment); 

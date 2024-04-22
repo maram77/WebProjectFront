@@ -1,0 +1,36 @@
+<div class="product-card">
+  <button mat-raised-button color="primary" [routerLink]="['/admin/addproduct']">Add Product</button>
+<table class="product-table">
+   <thead>
+     <tr>
+       <th>Product Reference</th>
+       <th>Name</th>
+       <th>Description</th>
+       <th>Image</th>
+       <th>Price</th>
+       <th>Color</th>
+       <th>Quantity</th>
+       <th>Brand</th>
+       <th>Category</th>
+       <th>Action</th> 
+     </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor="let product of products">
+       <td>{{ product.productReference }}</td>
+       <td>{{ product.name }}</td>
+       <td>{{ product.description }}</td>
+       <td><img src="../../../../../assets/images/{{ product.image }}" width="50"></td>
+       <td>{{ product.price }}</td>
+       <td>{{ product.color }}</td>
+       <td>{{ product.quantity }}</td>
+       <td>{{ product.brandName }}</td>
+       <td>{{ product.categoryName }}</td>
+       <td>
+           <button class="delete-button" (click)="deleteProduct(product.productReference)">Delete</button>
+           <button (click)="modifyProduct(product)">Modify</button> 
+         </td>
+     </tr>
+   </tbody>
+ </table>
+</div>

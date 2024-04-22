@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
 
@@ -9,7 +9,7 @@ import { LocalStorageService } from 'src/app/services/storage-service/local-stor
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(private router : Router,    private cdr: ChangeDetectorRef  ) { }
   user: any = {}; 
   
   ngOnInit() : void {

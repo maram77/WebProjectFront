@@ -124,7 +124,7 @@ export class BlogAddComponent implements OnInit {
   
         this.uploadImage(createdBlog.id);
         this.openSnackBar('Blog Created Successfully!', 'success-snackbar');
-        this.router.navigate(['/blog-list']);
+        this.router.navigate(['/blog/blog-list']);
       },
       (error) => {
         console.error('Error creating blog:', error);

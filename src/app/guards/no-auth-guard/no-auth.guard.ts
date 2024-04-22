@@ -16,7 +16,7 @@ export class NoAuthGuard implements CanActivate {
         this.router.navigateByUrl("/home")
         return false;
       } else if(LocalStorageService.hasToken() && LocalStorageService.isAdminLoggedIn()){
-        this.router.navigateByUrl("/admin/dashboard")
+        this.router.navigateByUrl("/admin/users")
         return false;
       }
     return true;

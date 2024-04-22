@@ -1,0 +1,54 @@
+<div class="dialog-container">
+    <h2 class="form-title">Update Product</h2>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="dialog-form">
+      <mat-form-field class="form-group">
+        <mat-label>ID:</mat-label>
+        <input matInput formControlName="id" id="id">
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Name:</mat-label>
+        <input matInput formControlName="name" id="name">
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Description:</mat-label>
+        <textarea matInput formControlName="description" id="description"></textarea>
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Price:</mat-label>
+        <input matInput formControlName="price" id="price" type="number">
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Color:</mat-label>
+        <input matInput formControlName="color" id="color">
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Quantity:</mat-label>
+        <input matInput formControlName="quantity" id="quantity" type="number">
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Brand ID:</mat-label>
+        <input matInput formControlName="brandId" id="brandId" type="number">
+      </mat-form-field>
+  
+      <mat-form-field class="form-group">
+        <mat-label>Category ID:</mat-label>
+        <input matInput formControlName="categoryId" id="categoryId" type="number">
+      </mat-form-field>
+  
+      <div class="form-group">
+        <label for="file">Image:</label>
+        <input type="file" (change)="onSelectImage($event)" id="file" class="form-control-file">
+      </div>
+  
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">Update</button>
+        <button mat-raised-button color="accent" type="button" (click)="closeDialog()">Cancel</button>
+      </div>
+    </form>
+  </div>

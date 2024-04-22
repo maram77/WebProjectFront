@@ -29,11 +29,12 @@ export class ProductService {
       return this.banners();
     }
 
+  
   public getProducts(): Observable<Product[]> {
     return this.http.get<any[]>(`${BASIC_URL}api/auth/products`).pipe(
       map(response => {
-        if (Array.isArray(response) && response.length >= 2 && Array.isArray(response[1])) {
-          return response[1] as Product[]; 
+        if (Array.isArray(response)) {
+          return response as Product[]; 
         } else {
           throw new Error('Invalid response format or missing products');
         }
@@ -47,22 +48,26 @@ export class ProductService {
       tap(products => console.log('Products:', products))
     );
   }
+
   public getAll(): Observable<Product[]> {
     return this.http.get<any[]>(`${BASIC_URL}api/auth/products`).pipe(
       tap(products => console.log('Products:', products)),
       map(response => {
-        const productsArray = response[1];
-        return productsArray.map(product => ({
-          productReference: product.productReference,
-          name: product.name,
-          description: product.description,
-          image: product.image,
-          brand: product.brand,
-          category: product.category,
-          color: product.color,
-          price: product.price,
-          quantity: product.quantity
-        }));
+        if (Array.isArray(response)) {
+          return response.map(product => ({
+            productReference: product.productReference,
+            name: product.name,
+            description: product.description,
+            image: product.image,
+            brand: product.brand,
+            category: product.category,
+            color: product.color,
+            price: product.price,
+            quantity: product.quantity
+          }));
+        } else {
+          throw new Error('Invalid response format or missing products');
+        }
       })
     );
   }
@@ -72,17 +77,19 @@ export class ProductService {
     return this.http.get<Product>(`${BASIC_URL}api/auth/products/${productReference}`);
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(`${BASIC_URL}api/auth/products`, product);
+  createProduct(formData: FormData): Observable<Product> {
+    const url = `${BASIC_URL}api/auth/products/add`;
+    return this.http.post<Product>(url, formData);
   }
 
-  updateProduct(productReference: string, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${BASIC_URL}api/auth/products/${productReference}`, product);
+  updateProduct(productReference: string, formData: FormData): Observable<Product> {
+    const url = `${BASIC_URL}api/auth/products/update/${productReference}`;
+    return this.http.put<Product>(url, formData);
   }
-
   deleteProduct(productReference: string): Observable<void> {
-    return this.http.delete<void>(`${BASIC_URL}api/auth/products/${productReference}`);
+    return this.http.delete<void>(`${BASIC_URL}api/auth/products/delete/${productReference}`);
   }
+  
 
   getCategoryByProductReference(productReference: string): Observable<any> {
     return this.http.get<any>(`${BASIC_URL}api/auth/products/${productReference}/category`);
@@ -105,6 +112,14 @@ export class ProductService {
 
   getProductsByCategory(categoryName: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${BASIC_URL}api/auth/products/category/${categoryName}`);
+  }
+  searchProducts(keyword: string): Observable<Product[]> {
+    return this.http.get<any[]>(`${BASIC_URL}api/auth/products/search?keyword=${keyword}`).pipe(
+      map(response => {
+        const products = response;
+        return products;
+      })
+    );
   }
 
 }

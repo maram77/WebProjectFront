@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { CartService } from '../../../services/cart-service/cart.service';
 import { ProductWithQuantityDto } from 'src/app/modals/ProductWithQuantityDto';
 import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +16,7 @@ export class CartComponent implements OnInit {
   quantity:number;
   user: any = {}; 
   cartId : number
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.user.id = LocalStorageService.getUser().id;
@@ -23,21 +24,16 @@ export class CartComponent implements OnInit {
 
   }
 
+
   fetchCartItems() {
     this.cartService.getCartByUserId(this.user.id).subscribe(
       (cart) => {
         if (cart) {
           this.cartId = cart.cartId; 
-          console.log("cartId",this.cartId)
           this.cartService.getProductsAndQuantities(this.cartId).subscribe(
             (response: any[]) => {
-              if (Array.isArray(response) && response.length >= 2) {
-                const items = response[1];
-                this.shoppingCartItems = items;
-                console.log(items);
-              } else {
-                console.error('Unexpected response format:', response);
-              }
+              this.shoppingCartItems = response;
+              console.log(this.shoppingCartItems);
             },
             error => {
               console.error('Error fetching cart items:', error);
@@ -52,6 +48,7 @@ export class CartComponent implements OnInit {
       }
     );
   }
+  
 
     public removeItem(item: any) {
       this.cartService.removeProductFromCart(this.cartId, item.product.productReference).subscribe(
@@ -61,9 +58,11 @@ export class CartComponent implements OnInit {
           this.cartService.getProductsAndQuantities(this.cartId).subscribe(
             (response: any[]) => {
               this.cartService.changeProductsAndQuantities(response); 
+              this.openSnackBar("Product removed succefully!", 'success-snackbar'); 
             },
             error => {
               console.error('Error fetching cart items:', error);
+              this.openSnackBar("Something is wrong!", 'error-snackbar'); 
             }
             );
         },
@@ -116,5 +115,14 @@ export class CartComponent implements OnInit {
   public getTotal(): number {
     return 0;
   } 
+
+  openSnackBar(message: string, customClass: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3000,
+      verticalPosition: 'top', 
+      panelClass: ['custom-snackbar', customClass] 
+    });
+  }
+
 
 }

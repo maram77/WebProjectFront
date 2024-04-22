@@ -1,7 +1,6 @@
 <div class="sophia-app">
     <ngx-spinner></ngx-spinner>
-<app-header></app-header>
-<router-outlet>
-</router-outlet>
-<app-footer></app-footer>
+    <app-header [ngClass]="{ 'hide-header-footer': showHeaderFooter }"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer [ngClass]="{ 'hide-header-footer': showHeaderFooter }"></app-footer>
 </div>

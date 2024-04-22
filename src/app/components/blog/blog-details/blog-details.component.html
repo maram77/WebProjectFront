@@ -2,7 +2,7 @@
 <div *ngIf="blogData" class="card-container">
     <div class="blog-details">
       <div class="container">
-        <div class="blog-list-wrapper sec-padding" fxLayout="row" fxLayout.lt-md="column">
+        <div class="blog-list-wrapper sec-padding_details " fxLayout="row" fxLayout.lt-md="column">
             <div fxFlex="100" fxFlex.gt-sm="70"  class="main-blog-panel">
                 <div class="single-blog-list">
                     <div style="text-align: right;"  *ngIf="blogData.user.id == user.id">
@@ -52,7 +52,6 @@
                     <div class="comment-box" *ngFor="let comment of comments">
                         
                         <div class="comment">
-                            <div class="author-thumb"><img src="assets/images/about-us/t2.jpg" alt=""></div>
                             <div class="comment-inner">
                                 <div class="comment-info clearfix">{{comment.user.firstname}} {{comment.user.lastname}} – {{comment.created_on | date:'medium'}}</div>                           
                                     <div class="rating" *ngIf="comment.user.id == user.id">

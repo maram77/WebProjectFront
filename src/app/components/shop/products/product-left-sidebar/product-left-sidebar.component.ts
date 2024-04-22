@@ -7,7 +7,7 @@ import { Product, ColorFilter } from 'src/app/modals/product';
 @Component({
   selector: 'app-product-left-sidebar',
   templateUrl: './product-left-sidebar.component.html',
-  styleUrls: ['./product-left-sidebar.component.sass']
+  styleUrls: ['./product-left-sidebar.component.scss']
 })
 export class ProductLeftSidebarComponent implements OnInit {
   public sidenavOpen:boolean = true;
@@ -24,24 +24,18 @@ export class ProductLeftSidebarComponent implements OnInit {
   public products: Product[] = [];
   public tags         :   any[] = [];
   public colors       :   any[] = [];
+  searchKeyword: string;
 
   constructor(private productService: ProductService, private route: ActivatedRoute) {
     this.route.params.subscribe(
       (params: Params) => {
         const category = params['category'];
-       /* this.productService.getProductsByCategory(category).subscribe(products => {
-       this.allItems = products;
-       this.products = products;
-       this.getTags(products)
-       this.getColors(products)
-        })*/
       }
     )
   }
 
 
 
-     // Get current product tags
      public getTags(products) {
       var uniqueBrands = []
       var itemBrand = Array();
@@ -59,7 +53,6 @@ export class ProductLeftSidebarComponent implements OnInit {
       this.tags = itemBrand
    }
 
-     // Get current product colors
      public getColors(products) {
       var uniqueColors = []
       var itemColor = Array();
@@ -97,51 +90,25 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.viewType = viewType;
     this.viewCol = viewCol;
   }
-    // Animation Effect fadeIn
     public fadeIn() {
       this.animation = 'fadeIn';
   }
 
-  // Animation Effect fadeOut
   public fadeOut() {
       this.animation = 'fadeOut';
   }
 
-    // Update tags filter
     public updateTagFilters(tags: any[]) {
       this.tagsFilters = tags;
-      this.animation == 'fadeOut' ? this.fadeIn() : this.fadeOut(); // animation
+      this.animation == 'fadeOut' ? this.fadeIn() : this.fadeOut(); 
   }
 
 
 
-    // sorting type ASC / DESC / A-Z / Z-A etc.
     public onChangeSorting(val) {
       this.sortByOrder = val;
-      this.animation == 'fadeOut' ? this.fadeIn() : this.fadeOut(); // animation
+      this.animation == 'fadeOut' ? this.fadeIn() : this.fadeOut(); 
    }
-
-     // Initialize filetr Items
-  /*public filterItems(): Product[] {
-    return this.items.filter((item: Product) => {
-        const Colors: boolean = this.colorFilters.reduce((prev, curr) => { // Match Color
-          if(item.color){
-            if (item.color.includes(curr.color)) {
-              return prev && true;
-            }
-          }
-        }, true);
-        const Tags: boolean = this.tagsFilters.reduce((prev, curr) => { // Match Tags
-          if(item.tags) {
-            if (item.tags.includes(curr)) {
-              return prev && true;
-            }
-          }
-        }, true);
-        return Colors && Tags; // return true
-    });
-
-}*/
 
 public onPageChanged(event){
   this.page = event;
@@ -150,19 +117,7 @@ public onPageChanged(event){
 }
 
 
-  // Update price filter
-//   public updatePriceFilters(price: any) {
-//     let items: any[] = [];
-//     this.products.filter((item: Product) => {
-//         if (item.price >= price[0] && item.price <= price[1] )  {
-//            items.push(item); // push in array
-//         }
-//     });
-//     this.items = items;
-// }
-
-
-  // Update price filter
+  
   public updatePriceFilters(price: any) {
     console.log(price);
     console.log(this.products);
@@ -232,7 +187,20 @@ onColorChanged(selectedColors: string[]) {
 }
 
 
-
+search() {
+  console.log('Search keyword:', this.searchKeyword);
+  if (this.searchKeyword) {
+    this.productService.searchProducts(this.searchKeyword).subscribe(
+      products => {
+        console.log('Search results:', products); 
+        this.allItems = products;
+      },
+      error => {
+        console.error('Error during search:', error); 
+      }
+    );
+  }
+}
 
 
 

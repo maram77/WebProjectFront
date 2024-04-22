@@ -16,12 +16,20 @@ export const AUTH_HEADER = "authorization"
 })
 
 export class AuthService {
-    constructor(private http: HttpClient,
+  constructor(private http: HttpClient,
         private storageService: LocalStorageService,
         private snackBar: MatSnackBar) { }
 
     register(signupDTO:any):Observable<any>{
         return this.http.post<[]>(BASIC_URL + "api/auth/sign-up",signupDTO)
+    }
+
+    openSnackBar(message: string, customClass: string) {
+      this.snackBar.open(message, 'Close', {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: ['custom-snackbar', customClass] 
+      });
     }
 
     login(email: string, password: string) {
@@ -42,12 +50,7 @@ export class AuthService {
             }),
             catchError(error => {
                 if (error.status === 401 && error.error && error.error.message) {
-                  let errorMessage = error.error.message;
-                  this.snackBar.open(errorMessage, 'Close', {
-                    duration: 5000,
-                    horizontalPosition: 'center',
-                    verticalPosition: 'top',
-                  });
+                  this.openSnackBar(error.error.message, 'error-snackbar');
                 }
                 return throwError(error);
               })

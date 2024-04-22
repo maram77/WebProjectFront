@@ -23,11 +23,11 @@ export class HomeComponent implements OnInit {
   public newArrivalsProducts: Array<Product>;
 
   public slides = [
-    { title: 'Huge sale', subtitle: 'Up to 70%', image: 'assets/images/carousel/banner1.jpg' },
-    { title: 'Biggest discount', subtitle: 'Check the promotion', image: 'assets/images/carousel/banner2.jpg' },
-    { title: 'Biggest sale', subtitle: 'Dont miss it', image: 'assets/images/carousel/banner3.jpg' },
-    { title: 'Our best products', subtitle: 'Special selection', image: 'assets/images/carousel/banner4.jpg' },
-    { title: 'Massive sale', subtitle: 'Only for today', image: 'assets/images/carousel/banner5.jpg' }
+    {image: 'assets/images/carousel/banner2.jpg' },
+    {  image: 'assets/images/carousel/banner5.jpg' },
+    {image: 'assets/images/carousel/banner3.jpg' },
+    {  image: 'assets/images/carousel/banner4.jpg' },
+    {image: 'assets/images/carousel/banner1.jpg' }
   ];
 
   constructor(private productService: ProductService, private cartService: CartService) { }
@@ -41,15 +41,15 @@ export class HomeComponent implements OnInit {
     );
   }
 
- fetchProducts() {
+
+
+fetchProducts() {
   this.productService.getAllProducts().subscribe(
     (data: any[]) => {
-      this.shoppingCartItems = data[1];
-      this.products = data[1];
-      console.log(data[1]);
+      this.products = data;
     },
     error => {
-      console.error('Error fetching cart items:', error);
+      console.error('Error fetching products:', error);
     }
   );
 }

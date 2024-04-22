@@ -11,10 +11,13 @@ export const AUTH_HEADER = "authorization"
 })
 
 export class UserService {
-    constructor(private http: HttpClient,
-        private storageService: LocalStorageService) {
+    constructor(private http: HttpClient,private storageService: LocalStorageService) {
 
-        }
+    }
+
+    getUserById(userId: number): Observable<any> {
+        return this.http.get<any>(`${BASIC_URL}api/auth/user/${userId}`);
+    }
     updateUser(userId: number, user: any): Observable<any> {
         return this.http.put<any>(`${BASIC_URL}api/auth/user/${userId}`, user);
     }

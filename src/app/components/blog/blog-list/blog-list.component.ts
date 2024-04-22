@@ -29,7 +29,7 @@ export class BlogListComponent implements OnInit {
       },
       (error) => {
         console.error("Error fetching blogs:", error); 
-        this.snackBar.open("Something Went Wrong !", "ok");
+        this.openSnackBar("Something Went Wrong !", 'error-snackbar');
       }
     );
   }
@@ -48,7 +48,7 @@ export class BlogListComponent implements OnInit {
           if (error.status === 404) {
             blog.img = this.defaultImage; 
           } else {
-            this.snackBar.open("Something Went Wrong with image  !", "ok");
+            this.openSnackBar("Something Went Wrong with image  !", 'error-snackbar');
           }
         }
       );
@@ -63,6 +63,13 @@ export class BlogListComponent implements OnInit {
       };
       reader.onerror = reject;
       reader.readAsDataURL(image);
+    });
+  }
+  openSnackBar(message: string, customClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar', customClass] 
     });
   }
   
@@ -87,14 +94,15 @@ export class BlogListComponent implements OnInit {
                 if (error.status === 404) {
                   item.img = this.defaultImage; 
                 } else {
-                  this.snackBar.open("Something Went Wrong with image  !", "ok");
+                  this.openSnackBar("Something Went Wrong with image  !", 'error-snackbar');
+
                 }
               }
             );
           });
         },
         (error) => {
-          this.snackBar.open("Something Went Wrong !", "ok");
+        this.openSnackBar("Something Went Wrong !", 'error-snackbar');
         }
       );
     }

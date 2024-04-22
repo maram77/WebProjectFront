@@ -28,10 +28,6 @@ const appRoutes: Routes = [
       {
         path: "admin",
         loadChildren: () => import('./components/admin/admin.module').then(m => m.AdminModule)
-      },
-      {
-        path: "user",
-        loadChildren: () => import('./user/user.module').then(m => m.UserModule)
       }
     ]
   },

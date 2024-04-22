@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot
     ): boolean {
     if(LocalStorageService.isUserLoggedIn()) {
-      this.router.navigateByUrl("/pages/contact");
+      this.router.navigateByUrl("");
       this.openSnackBar("You don't have access to this page");
       return false;
     }

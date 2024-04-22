@@ -1,9 +1,10 @@
 
 <div class="home-header-2">
     <div class="container"fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20px" fxlayoutalign="space-between center">
-      <div class="logo">
-          <a [routerLink]="['/home/one']" routerLinkActive="router-link-active" ><img src="assets/images/logo-01.png"></a>
-      </div>
+      <a [routerLink]="['/home/one']" routerLinkActive="router-link-active">
+        <img style="width: 130px; height: auto;" src="assets/images/logo-01.png">
+      </a>
+      
       <div fxflexoffset.gt-sm="10"  fxFlex class="search-form">
        <form class="search-form" fxLayout="row">
          <div class="form-wrap">

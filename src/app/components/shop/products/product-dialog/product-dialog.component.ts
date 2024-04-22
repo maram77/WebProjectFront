@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Product } from 'src/app/modals/product';
 import { CartService } from '../../../../services/cart-service/cart.service';
 import { ProductService } from '../../../../services/product-service/product.service';
@@ -21,24 +21,26 @@ export class ProductDialogComponent implements OnInit {
   public brandName          :   string;
   user: any = {}; 
   cartId : number;
-  constructor(private router: Router, public productsService: ProductService, private cartService: CartService, public dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public product: Product) { }
+  constructor(private router: Router, private snackBar: MatSnackBar, public productsService: ProductService, private cartService: CartService, public dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public product: Product) { }
 
   ngOnInit() {
     this.user.id = LocalStorageService.getUser().id;
     this.productsService.getProducts().subscribe(product => this.products = product);
     this.loadBrandName();
+    this.fetchCartItems();
   }
-
+ 
   fetchCartItems() {
     this.cartService.getCartByUserId(this.user.id).subscribe(
       (cart) => {
         if (cart) {
           this.cartId = cart.cartId; 
           this.cartService.getProductsAndQuantities(this.cartId).subscribe(
-            (response: any[]) => {
-              if (Array.isArray(response) && response.length >= 2) {
-                const items = response[1];
+            (response: any) => {
+              if (response ) {
+                const items = response;
                 console.log(items);
+               
               } else {
                 console.error('Unexpected response format:', response);
               }
@@ -56,9 +58,9 @@ export class ProductDialogComponent implements OnInit {
       }
     );
   }
+  
   public addToCart(user,productReference: string, counter) {
     if (counter == 0) return false;
-    console.log('Adding to cart...');
     this.cartService.addToCart(this.user.id, this.product.productReference, parseInt(counter)).subscribe(
       () => {
         this.close();
@@ -66,9 +68,11 @@ export class ProductDialogComponent implements OnInit {
         this.cartService.getProductsAndQuantities(this.cartId).subscribe(
           (response: any[]) => {
             this.cartService.changeProductsAndQuantities(response);
+            this.openSnackBar("Product added to cart succefully!", 'success-snackbar'); 
           },
           error => {
             console.error('Error fetching cart items:', error);
+            this.openSnackBar("Something is wrong!", 'error-snackbar'); 
           }
         );
     },
@@ -99,12 +103,20 @@ export class ProductDialogComponent implements OnInit {
     this.productsService.getBrandByProductReference(this.product.productReference).subscribe(
       (brand) => {
         this.brandName = brand.brandName;
-        console.log('brand name : ', this.brandName)
       },
       (error) => {
         console.error('Error loading brand name:', error);
       }
     );
+  }
+
+
+  openSnackBar(message: string, customClass: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3000,
+      verticalPosition: 'top', 
+      panelClass: ['custom-snackbar', customClass] 
+    });
   }
 
 }

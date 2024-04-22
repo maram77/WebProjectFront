@@ -1,0 +1,48 @@
+<!-- Add Product Form -->
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+    <h2>Add a Product</h2>
+    <div class="form-group">
+      <label for="id">Reference</label>
+      <input type="text" formControlName="id" id="id">
+    </div>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" formControlName="name" id="name">
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea formControlName="description" id="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" formControlName="price" id="price">
+    </div>
+    <div class="form-group">
+      <label for="color">Color:</label>
+      <input type="text" formControlName="color" id="color">
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity:</label>
+      <input type="number" formControlName="quantity" id="quantity">
+    </div>
+    <div class="form-group">
+      <label for="brandId">Brand:</label>
+      <select formControlName="brandId" id="brandId">
+        <option *ngFor="let brand of brands" [value]="brand.idBrand">{{ brand.brandName }}</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="categoryId">Category:</label>
+      <select formControlName="categoryId" id="categoryId">
+        <option *ngFor="let category of categories" [value]="category.idCategory">{{ category.categoryName }}</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="file">Image:</label>
+      <input type="file" (change)="handleFileInput($event)" id="file" accept="image/*">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  

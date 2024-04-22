@@ -33,30 +33,7 @@ export class ProductCarouselTwoComponent implements OnInit {
     this.user.id = LocalStorageService.getUser().id;
   }
 
-  /*loadProductImages() {
-    this.products.forEach(product => {
-      this.productsService.getProductImageByReference(product.productReference).subscribe(
-        (imageData: Uint8Array) => {
-          this.createImageFromBlob(imageData);
-        },
-        (error) => {
-          console.error('Error loading product image:', error);
-        }
-      );
-    });
-  }
-
-  createImageFromBlob(imageData) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.productImages.push(reader.result as string);
-    };
-    reader.onerror = (error) => {
-      console.error('Error converting blob to base64:', error);
-    };
-    reader.readAsDataURL(new Blob([imageData]));
-  }*/
-
+  
   ngAfterViewInit(){
     this.config = {
       observer: true,

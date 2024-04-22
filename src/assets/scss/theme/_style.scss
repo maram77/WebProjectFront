@@ -52,7 +52,10 @@
 * 1. General styles
 ****************************************/
 
-
+.hide-header-footer app-header,
+.hide-header-footer app-footer {
+    display: none;
+}
 html, body { height: 100%; }
 body {
   margin: 0;
@@ -300,6 +303,45 @@ width: 100% !important;
 }
 .sec-padding {
   padding: 60px 0;
+}
+.sec-padding_blog {
+  padding: 100px 0 115px 0;
+}
+.sec-padding_reset {
+  padding: 200px 0 322px 0;
+}
+.sec-padding_details {
+  padding: 60px 0 180px 0;
+}
+.sec-padding_users {
+  padding: 60px 0 355px 0;
+}
+.sec-padding_categorie {
+  padding: 30px 0 230px 0;
+}
+.sec-padding_brand{
+  padding: 30px 0 175px 0;
+}
+.sec-padding_order{
+  padding: 30px 0 450px 0;
+}
+.sec-padding_adminblog{
+  padding: 30px 0 350px 0;
+}
+
+
+
+.sec-padding_add {
+  padding: 60px 0 80px 0;
+}
+.sec-padding_wishlist {
+  padding: 310px 0;
+}
+.sec-padding_compare {
+  padding: 280px 0;
+}
+.sec-padding_contact {
+  padding: 90px 0 120px 0;
 }
 .sec-padding2 {
   padding: 20px 0;
@@ -4849,6 +4891,10 @@ margin: 10px 0;
   background-color: $theme-main-red; 
 }
 
+.info-snackbar {
+  background-color:#17a2b8;
+}
+
 .custom-snackbar .mat-snack-bar-container {
   padding: 10px 20px;
 }
@@ -4870,7 +4916,6 @@ margin: 10px 0;
 }
 
 .user-component {
-  // Specific styles for user component table
   .mat-elevation-z8 {
     display: block;
     width: 100%;
@@ -4880,27 +4925,27 @@ margin: 10px 0;
 
     table.users-class {
       width: 100%;
-      border-collapse: separate; /* Change to separate to add space between columns */
-      border-spacing: 0 10px; /* Add spacing between cells */
-      margin-bottom: 15px; /* Add some bottom margin for spacing */
+      border-collapse: separate; 
+      border-spacing: 0px; 
+      margin-bottom: 15px; 
 
       th, td {
         padding-top: 15px;
         padding-bottom: 15px;
-        padding-left: 20px; /* Adjust left padding for th and td */
-        padding-right: 20px; /* Adjust right padding for th and td */
+        padding-left: 20px;
+        padding-right: 20px; 
         vertical-align: top;
         font-size: 14px;
         text-align: left;
         border-bottom: 1px solid transparent;
-        white-space: nowrap; /* Prevent wrapping content */
-        overflow: hidden; /* Hide overflowing content */
-        text-overflow: ellipsis; /* Add ellipsis for overflowed content */
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis; 
       }
 
-      tbody tr:hover { /* Change background color when hovering over a row */
-        background-color: #f5f5f5; /* Change to the desired background color */
-        cursor: pointer; /* Show pointer cursor on hover */
+      tbody tr:hover { 
+        background-color: #f5f5f5; 
+        cursor: pointer;
       }
 
       th {
@@ -4917,19 +4962,99 @@ margin: 10px 0;
         white-space: nowrap;
       }
 
-      /* Set fixed width for each column */
-      .users-class th.mat-header-cell:nth-child(1),
-      .users-class td.mat-cell:nth-child(1) {
-        width: 50px; /* Adjust the width as needed */
-      }
-
-      .users-class th.mat-header-cell:nth-child(2),
-      .users-class td.mat-cell:nth-child(2) {
-        width: 150px; /* Adjust the width as needed */
-      }
-
-      /* Repeat the above for other columns */
+     
     }
   }
 }
+
+
+.dialog-container {
+  position: relative;
+}
+
+.close-btn-outer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+
+
+
+
+.product-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.product-table th,
+.product-table td {
+  padding: 10px;
+  border: none;
+}
+
+.product-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  text-align: left;
+}
+
+.product-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.product-table tbody td img {
+  max-width: 50px;
+  max-height: 50px;
+  display: block;
+  margin: 0 auto;
+}
+
+.product-table tbody td {
+  vertical-align: middle;
+}
+
+.product-table tbody td button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.product-table tbody td button:hover {
+  background-color: #0056b3;
+}
+.product-table tbody td button.delete-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.product-table tbody td button.delete-button:hover {
+  background-color: #c82333;
+}
+
+
+
+
+
+
+
 

@@ -48,16 +48,6 @@ export class LocalStorageService {
         return localStorage.getItem(TOKEN)
     }
     
-     getUsername() {
-        const userFirstname = localStorage.getItem(USERFIRSTNAME);
-        const userLastname = localStorage.getItem(USERLASTNAME);
-        if (userFirstname && userLastname) {
-            return { firstname: userFirstname, lastname: userLastname };
-        } else {
-            return { firstname: null, lastname: null };
-        }
-    }
-
     static hasToken() : boolean{
         if (this.getToken() === null) {
             return false;
@@ -81,7 +71,7 @@ export class LocalStorageService {
         return user.role;
     }
 
-  
+
     static getUser() {
         const userId = localStorage.getItem(USERID);
         const role = localStorage.getItem(USERROLE);
@@ -110,7 +100,7 @@ export class LocalStorageService {
         }
     }
 
-
+   
     static isAdminLoggedIn() : boolean {
         if(this.getToken() === null){
             return false;

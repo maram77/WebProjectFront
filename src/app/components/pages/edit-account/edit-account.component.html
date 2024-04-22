@@ -11,28 +11,30 @@
                         <div fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
                             <mat-form-field class="w-100">
                                 <mat-label>First Name</mat-label>
-                                <input matInput name="firstname" id="firstname" [(ngModel)]="user.firstname"  formControlName="firstname" #firstnameInput>
+                                <input matInput name="firstname" id="firstname"   formControlName="firstname" #firstnameInput>
                             </mat-form-field>
                             <mat-form-field class="w-100">
                                 <mat-label>Last Name</mat-label>
-                                <input matInput name="lastname" id="lastname" [(ngModel)]="user.lastname"  formControlName="lastname" #lastnameInput>
+                                <input matInput name="lastname" id="lastname"   formControlName="lastname" #lastnameInput>
                             </mat-form-field>
                             <mat-form-field class="w-100">
                                 <mat-label>Email Address</mat-label>
-                                <input matInput name="email" id="email" [(ngModel)]="user.email"   formControlName="email" #emailInput>
+                                <input matInput name="email" id="email"  formControlName="email" #emailInput>
                             </mat-form-field>
                             <mat-form-field class="w-100">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput name="telephone" id="telephone" [(ngModel)]="user.telephone"  formControlName="telephone" #telephoneInput>
+                                <input matInput name="telephone" id="telephone"   formControlName="telephone" #telephoneInput>
                             </mat-form-field>
                             <mat-form-field class="w-100">
                                 <mat-label>Password</mat-label>
-                                <input matInput type="password" name="password" id="password"  formControlName="password" #passwordInput>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="editMode" class="w-100">
+                                <input matInput type="password" formControlName="password" placeholder="Enter new password">
+                              </mat-form-field>
+                              
+                              <mat-form-field class="w-100">
                                 <mat-label>Confirm Password</mat-label>
-                                <input matInput type="password" name="confirmPassword" id="confirmPassword" [(ngModel)]="confirmPassword" formControlName="confirmPassword" required>
-                            </mat-form-field>
+                                <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm new password">
+                              </mat-form-field>
+                              
                         </div>
                         <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1" fxLayoutAlign="flex-end">
                             <button *ngIf="!editMode" class="btn-project" mat-raised-button color="accent" (click)="toggleEditMode()">Edit Profile</button>

@@ -16,13 +16,13 @@ export class CategoryfilterComponent implements OnInit {
   ngOnInit() {
     this.loadCategories();
   }
-
+  
   loadCategories() {
     this.categoryService.getAllCategories()
       .subscribe(
         (data: any[]) => {
-          if (Array.isArray(data) && data.length >= 2 && Array.isArray(data[1])) {
-            this.categories = data[1];
+          if (Array.isArray(data)) {
+            this.categories = data;
             console.log('Categories:', this.categories);
           } else {
             console.error('Unexpected response format:', data);

@@ -1,0 +1,17 @@
+<div class="dialog-container">
+
+    <div class="close-btn-outer">
+      <button mat-mini-fab mat-dialog-close aria-label="Close" color="warn" ><mat-icon>close</mat-icon></button>
+    </div>
+<h2 mat-dialog-title style="text-align: center;">Edit Brand Name</h2>
+
+<div mat-dialog-content style="text-align: center;">
+  <mat-form-field>
+    <input matInput placeholder="New Brand Name" [(ngModel)]="newBrandName" style="width: 100%;">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions  style="display: flex; justify-content: center;">
+  <button mat-button (click)="onNoClick()" style="color: white; background-color: orange;" >Cancel</button>
+  <button mat-button (click)="onSaveClick()" style="color: rgb(192, 154, 154); background-color: orange;" >Save</button>
+</div>
+</div>

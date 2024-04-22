@@ -15,7 +15,6 @@ import {ResetPasswordComponent} from './reset-password/reset-password.component'
 import {VerificationEmailComponent} from './verification-email/verification-email.component'
 import {SetNewPasswordComponent} from './set-new-password/set-new-password.component'
 import { NoAuthGuard } from 'src/app/guards/no-auth-guard/no-auth.guard';
-import { AdminGuard } from 'src/app/guards/admin-guard/admin.guard';
 import { AuthGuard } from 'src/app/guards/auth-guard/auth.guard';
 
 const routes: Routes = [
@@ -23,8 +22,8 @@ const routes: Routes = [
     path: '',
     children: [
       { path: 'about', component: AboutUsComponent },
-      { path: 'cart', component: CartComponent },
-      { path: 'checkout', component: CheckoutComponent },
+      { path: 'cart', component: CartComponent, canActivate: [UserGuard] },
+      { path: 'checkout', component: CheckoutComponent , canActivate: [UserGuard]},
       { path: 'faq', component: FaqComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'wishlist', component: WishlistComponent },

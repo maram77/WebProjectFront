@@ -8,7 +8,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class ColorFilterComponent {
   @Output() colorChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  colors: string[] = ['red', 'blue', 'green', 'yellow', 'orange','black']; 
+  colors: string[] = ['red', 'blue', 'green', 'yellow', 'orange','black','white']; 
 
   selectedColors: string[] = [];
 

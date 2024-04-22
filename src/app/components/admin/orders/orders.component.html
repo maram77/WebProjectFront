@@ -1,0 +1,31 @@
+<div class="sec-padding_order">
+<div class="table-container">
+    <table class="mat-elevation-z8" style="margin: 50px;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Status</th>
+          <th>Amount</th>
+          <th>Recipient</th>
+          <th>Delivery Address</th>
+          <th>Postal Code</th>
+          <th>Contact Number</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.orderStatus }}</td>
+          <td>{{ order.orderAmount }} TND</td>
+          <td>{{ order.user.firstname }} {{ order.user.lastname }}</td>
+          <td>{{ order.delivery.address }}, {{ order.delivery.city }}</td>
+          <td>{{ order.delivery.postCode }}</td>
+          <td>{{ order.delivery.contactNumber }}</td>
+          <td><button mat-button color="primary" (click)="openEditDialog(order)">Edit</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+</div>

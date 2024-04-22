@@ -19,13 +19,20 @@ export class CommentDeleteComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
+  openSnackBar(message: string, customClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar', customClass] 
+    });
+  }
   deleteComment(){
     this.CommentService.deleteComment(this.data.id).subscribe(res=>{
-      this.snackBar.open("Comment deleted Successfully !","ok");
+      this.openSnackBar("Comment deleted Successfully !", 'success-snackbar');
+
       window.location.reload();
     }, error=>{
-      this.snackBar.open("Something Went Wrong !","ok");
+      this.openSnackBar("Something Went Wrong !", 'error-snackbar');
     })
   }
 }

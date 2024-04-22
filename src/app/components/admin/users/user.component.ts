@@ -38,7 +38,7 @@ export class UserComponent implements OnInit {
   }
 
   desactiverUser(user: any): void {
-    if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?")) {
+    if (confirm("Êtes-vous sûr de vouloir désactiver le compte de cet utilisateur?")) {
       this.userService.disableUserAccount(user.id).subscribe(
         (response) => {
           console.log(response); 

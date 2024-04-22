@@ -29,17 +29,16 @@ export class SetNewPasswordComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];
       if (!this.token) {
-        // Handle case where token is not provided in the URL
-        // For example, redirect to an error page or show an error message to the user
       }
     });
+    document.body.classList.add('hide-header-footer');
   }
 
   passwordMatchValidator(control: AbstractControl) {
     const newPassword = control.get('newPassword').value;
     const confirmPassword = control.get('confirmPassword').value;
     if (newPassword !== confirmPassword) {
-      return { passwordMismatch: true }; // Set error if passwords don't match
+      return { passwordMismatch: true }; 
     } else {
       return null;
     }
@@ -66,5 +65,8 @@ export class SetNewPasswordComponent implements OnInit {
       verticalPosition: 'top',
       panelClass: ['custom-snackbar', customClass] 
     });
+  }
+  ngOnDestroy(): void {
+    document.body.classList.remove('hide-header-footer');
   }
 }

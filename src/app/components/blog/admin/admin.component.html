@@ -1,4 +1,4 @@
-
+<div class="sec-padding_adminblog">
 <mat-table [dataSource]="blogs" class="mat-elevation-z8"  style="margin: 50px;">
 
   <ng-container matColumnDef="title">
@@ -53,3 +53,4 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
+</div>

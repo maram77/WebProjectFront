@@ -1,0 +1,39 @@
+<div class="sec-padding_categorie">
+
+<div class="product-card ">
+    <div>
+        <h3>Add New Category</h3>
+        <mat-form-field>
+          <input matInput placeholder="New Category Name" [(ngModel)]="newCategoryName">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addNewCategory()" style="margin-left: 10px;">Add Category</button>
+      </div>
+      
+    <table class="product-table">
+        <thead>
+          <tr>
+            <th>Category ID</th>
+            <th>Category Name</th>
+            <th>Associated Products</th>
+            <th>Action</th> 
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.idCategory }}</td>
+            <td>{{ category.categoryName }}</td>
+            <td>
+                <ul>
+                    <li *ngFor="let product of category.products">{{ product }}</li>
+                </ul>
+            </td>
+            <td>
+                <button class="delete-button" (click)="deleteCategory(category.idCategory)">Delete</button>
+                <button (click)="openModifyCategoryDialog(category.idCategory)">Modify</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

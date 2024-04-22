@@ -4,6 +4,7 @@ import { CartService } from '../../../services/cart-service/cart.service';
 import { Observable, Subscription } from 'rxjs';
 import { ProductService } from '../../../services/product-service/product.service';
 import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
+import { MatSnackBar } from '@angular/material';
 
 
 
@@ -27,12 +28,12 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   @Input() shoppingCartItems: Product[] = [];
   
 
-  constructor(private cartService: CartService, public productService: ProductService) {
+  constructor(private cartService: CartService,private snackBar: MatSnackBar, public productService: ProductService) {
    
    }
 
   ngOnInit() {
-    console.log(this.cartService.currentProductsAndQuantities);
+   
     this.itemSubscription=this.cartService.currentProductsAndQuantities.subscribe(
 
       {
@@ -43,13 +44,14 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
 
       }
     )
-    console.log(this.itemSubscription);
+    //console.log(this.itemSubscription);
   
     this.user.id = LocalStorageService.getUser().id;
     this.fetchCartItems();
 
   }
-  
+ 
+
   fetchCartItems() {
     this.cartService.getCartByUserId(this.user.id).subscribe(
       (cart) => {
@@ -57,10 +59,8 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
           this.cartId = cart.cartId;
           this.cartService.getProductsAndQuantities(this.cartId).subscribe(
             (response: any[]) => {
-              if (Array.isArray(response) && response.length >= 2 && Array.isArray(response[1])) {
-                const items = response[1];
-                this.shoppingCartItems = items;
-                console.log(items);
+              if (Array.isArray(response)) {
+                this.shoppingCartItems = response;
                 this.updateSubtotal();
               } else {
                 console.error('Unexpected response format:', response);
@@ -79,6 +79,8 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
       }
     );
   }
+  
+
   updateSubtotal() {
     this.subtotal$ = this.cartService.getTotalAmount(this.cartId);
   }
@@ -92,6 +94,16 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
       () => {
         console.log('Item removed successfully');
         this.fetchCartItems();
+        this.cartService.getProductsAndQuantities(this.cartId).subscribe(
+          (response: any[]) => {
+            this.cartService.changeProductsAndQuantities(response); 
+            this.openSnackBar("Product removed succefully!", 'success-snackbar'); 
+          },
+          error => {
+            console.error('Error fetching cart items:', error);
+            this.openSnackBar("Something is wrong!", 'error-snackbar'); 
+          }
+          );
        
       },
       error => {
@@ -106,6 +118,14 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.itemSubscription.unsubscribe();
+  }
+
+  openSnackBar(message: string, customClass: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3000,
+      verticalPosition: 'top', 
+      panelClass: ['custom-snackbar', customClass] 
+    });
   }
 
 

@@ -1,0 +1,9 @@
+<div class="edit-dialog-container">
+    <h2 class="dialog-title">Edit Order</h2>
+    <div class="input-container">
+      <input type="text" [(ngModel)]="editedText" placeholder="Enter the new order status" class="edit-input">
+    </div>
+    <div class="button-container">
+      <button mat-button color="primary" (click)="save(order)" class="save-button">update order</button>
+    </div>
+  </div>

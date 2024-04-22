@@ -1,7 +1,6 @@
 <div class="brands-items">
-    <div *ngFor="let color of colors" class="color-option" [class.selected]="isColorSelected(color)" (click)="toggleColorFilter(color)">
-      <div class="color-box" [style.background-color]="color"></div>
-      <span class="color-name">{{ color }}</span>
-    </div>
+  <div *ngFor="let color of colors" class="color-option" [class.selected]="isColorSelected(color)" (click)="toggleColorFilter(color)">
+    <div class="color-box" [style.background-color]="color"></div>
+    <span class="color-name">{{ color }}</span>
   </div>
-  
+</div>

@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import {AuthService} from '../../../services/auth-service/auth.service'
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/storage-service/local-storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
@@ -23,8 +25,9 @@ export class MyAccountComponent {
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private router :Router
-     ) {}
+    private router :Router,
+    private snackBar: MatSnackBar
+    ) {}
 
   ngOnInit() {
   this.registerForm = this.fb.group({
@@ -43,10 +46,22 @@ export class MyAccountComponent {
   }
   
 
-  register(){
-    this.authService.register(this.registerForm.value).subscribe((res) => {
-      console.log(res);
-    })
+  register() {
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (res) => {
+        this.openSnackBar("Please check your mailbox to verify your account", 'success-snackbar');
+        console.log(res);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        this.openSnackBar(error.error, 'error-snackbar');
+      },
+      complete: () => this.resetForm()
+    });
+  }
+
+  resetForm() {
+    this.registerForm.reset();
   }
 
   login(){
@@ -56,7 +71,7 @@ export class MyAccountComponent {
     ).subscribe((res) => {
       console.log(res);
       if(LocalStorageService.isAdminLoggedIn()){
-        this.router.navigateByUrl("/admin/dashboard");
+        this.router.navigateByUrl("/admin/users");
       } else if (LocalStorageService.isUserLoggedIn()) {
         this.router.navigateByUrl("");
       }
@@ -70,4 +85,12 @@ export class MyAccountComponent {
     })
    
   }
+  openSnackBar(message: string, customClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar', customClass] 
+    });
+  }
+  
 }

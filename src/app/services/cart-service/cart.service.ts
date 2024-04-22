@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Product } from 'src/app/modals/product.model';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subscriber, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Cart } from 'src/app/modals/cart';
 import { ProductWithQuantityDto } from 'src/app/modals/ProductWithQuantityDto';
 import { environment } from "src/environments/environment";
+import { OrderDetail } from '../../modals/orderDetail'; 
 
 const BASIC_URL = environment["BASIC_URL"]
 
@@ -32,7 +33,7 @@ export class CartService {
 
   addToCart(userId: number, productId: string, quantity: number): Observable<Cart> {
     const url = `${BASIC_URL}api/auth/cart/addWithQuantity?userId=${userId}&productId=${productId}&quantity=${quantity}`;
-    console.log(url,this.http.post<Cart>(url, {}));
+    //console.log(url,this.http.post<Cart>(url, {}));
     return this.http.post<Cart>(url, {})
   }
 
@@ -66,6 +67,7 @@ export class CartService {
     return this.http.delete<void>(url);
   }
 
+  
   public getProductsAndQuantities(cartId: number): Observable<ProductWithQuantityDto[]> {
     const url = `${BASIC_URL}api/auth/cart/${cartId}/productsAndQuantities`;
     return this.http.get<ProductWithQuantityDto[]>(url);
@@ -87,8 +89,8 @@ export class CartService {
   }
 
   changeProductsAndQuantities(array: any){
-    this.productsAndQuantitiesSrc.next(array[1]);
-    console.log("changeProductsAndQuantities",array[1]);
+    this.productsAndQuantitiesSrc.next(array);
+   console.log("changeProductsAndQuantities",array);
   }
 
   getCartByUserId(userId: number): Observable<Cart> {
@@ -99,26 +101,42 @@ export class CartService {
       })
     );
   }
+  getAllDeliveries(): Observable<any[]> {
+    return this.http.get<any[]>(`${BASIC_URL}api/auth/deliveries/all`);
+  }
 
+  getOrdersByUserId(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${BASIC_URL}api/auth/checkout/orders/${userId}`);
+  }
 
-  
+  getAllOrders(): Observable<any[]> {
+    return this.http.get<any[]>(`${BASIC_URL}api/auth/checkout/orders`);
+  }
 
+  updateOrderDetail(id: number, orderDetail: OrderDetail): Observable<OrderDetail> {
+    const url = `${BASIC_URL}api/auth/checkout/${id}`;
+    return this.http.put<OrderDetail>(url, orderDetail, this.getHttpOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
 
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  private getHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+  }
 }

@@ -15,7 +15,10 @@ export class Product {
   color?: string;
   quantity?: number;
   brand?: any;
+  brandName?: any;
   category?: any;
+  categoryName?: any;
+
 
   constructor(
     productReference?: string,
