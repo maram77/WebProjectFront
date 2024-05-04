@@ -35,9 +35,12 @@ export class ModifyProductComponent implements OnInit {
       quantity: [''],
       brandId: [''],
       categoryId: [''],
+      brandName: [''], 
+      categoryName: [''],
       file: [null]
     });
   }
+
   ngOnInit() {
     if (this.data && this.data.productReference) {
       console.log('Product reference received:', this.data.productReference);
@@ -45,14 +48,29 @@ export class ModifyProductComponent implements OnInit {
     } else {
       console.error('No product reference provided.');
     }
+    this.fetchAllBrands();
+    this.fetchAllCategories();
+
+
   }
-  
+  fetchAllBrands(): void {
+    this.brandService.getAllBrands().subscribe(
+      (brands: any[]) => {
+        this.brands = brands;
+      },
+      (error) => {
+        console.error('Error fetching brands:', error);
+      }
+    );
+  }
 
   getProductByReference(productReference: string) {
     this.productService.getProductByReference(productReference).subscribe(
       (product: Product) => {
         this.product = product;
         this.populateFormWithProductData();
+        this.fetchBrandName(this.product.brand);
+        this.fetchCategoryName(this.product.category);
       },
       (error: any) => {
         console.error('Error fetching product details:', error);
@@ -88,12 +106,13 @@ export class ModifyProductComponent implements OnInit {
     formData.append('quantity', this.productForm.get('quantity').value);
     formData.append('brandId', this.productForm.get('brandId').value);
     formData.append('categoryId', this.productForm.get('categoryId').value);
-    formData.append('file', this.fileToUpload || ''); // Use existing image if no new image selected
+    formData.append('file', this.fileToUpload || '');
 
     this.productService.updateProduct(this.product.productReference, formData).subscribe(
       (product) => {
         console.log('Product updated:', product);
         this.dialogRef.close();
+        location.reload();
       },
       (error) => {
         console.error('Error updating product:', error);
@@ -101,6 +120,41 @@ export class ModifyProductComponent implements OnInit {
     );
   }
 
+  fetchBrandName(brandId: number) {
+    this.brandService.getBrandById(brandId).subscribe(
+      (brand) => {
+        this.productForm.patchValue({
+          brandName: brand.brandName 
+        });
+      },
+      (error) => {
+        console.error('Error fetching brand name:', error);
+      }
+    );
+  }
+  fetchCategoryName(categoryId: number) {
+    this.categoryService.getCategoryById(categoryId).subscribe(
+      (category) => {
+        this.productForm.patchValue({
+          categoryName: category.categoryName 
+        });
+      },
+      (error) => {
+        console.error('Error fetching brand name:', error);
+      }
+    );
+  }
+  fetchAllCategories(): void {
+    this.categoryService.getAllCategories().subscribe(
+      (categories: any[]) => {
+        this.categories = categories;
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+  
   closeDialog() {
     this.dialogRef.close();
   }

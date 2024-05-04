@@ -17,15 +17,16 @@
         .users-class th, .users-class td {
             text-align: left;
             vertical-align: middle;
-            padding: 10px;
+            padding: 5px;
         }
         .mat-column-id { width: 5%; }
         .mat-column-firstname { width: 10%; }
         .mat-column-lastname { width: 10%; }
         .mat-column-email { width: 20%; }
-        .mat-column-telephone { width: 10%; }
-        .mat-column-userRole { width: 10%; }
-        .mat-column-actions { width: 5%; }
+        .mat-column-telephone { width: 5%; }
+        .mat-column-userRole { width: 5%; }
+        .mat-column-Active { width: 18%; }
+        .mat-column-actions { width: 10%; }
 
         .mat-paginator {
             background: none;
@@ -66,6 +67,11 @@
         <ng-container matColumnDef="userRole" class="mat-column-userRole">
           <th mat-header-cell *matHeaderCellDef> Role </th>
           <td mat-cell *matCellDef="let user"> {{user.userRole}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Active account" class="mat-column-Active">
+          <th mat-header-cell *matHeaderCellDef> Active account </th>
+          <td mat-cell *matCellDef="let user"> {{user.enabled}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions" class="mat-column-actions">

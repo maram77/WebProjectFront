@@ -51,6 +51,7 @@ openEditDialog(order): void {
   const dialogRef = this.dialog.open(EditdialogComponent, {
     width: '250px',
     data: { order },
+
     panelClass: 'my-dialog',
     backdropClass: 'my-dialog-backdrop'
   });

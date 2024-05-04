@@ -10,8 +10,8 @@
     <ng-container *ngIf="isUserLoggedIn() || isAdminLoggedIn()">
       <a mat-button mat-button [matMenuTriggerFor]="blog" class="mat-button">Blog<mat-icon class="caret">arrow_drop_down</mat-icon></a>
       <mat-menu #blog="matMenu" [overlapTrigger]="false" class="app-dropdown">
-        <a mat-menu-item [routerLink]="['/blog/blog-list']">Blog List</a>
-        <a mat-menu-item [routerLink]="['/blog/blog-Add']">Add Blog</a>
+        <a mat-menu-item [routerLink]="['/blog/blog-list']" *ngIf=isUserLoggedIn()>Blog List</a>
+        <a mat-menu-item [routerLink]="['/blog/blog-Add']" >Add Blog</a>
         <a mat-menu-item [routerLink]="['/blog/admin-blog-list']" *ngIf="isAdminLoggedIn()">Admin Blog List</a>
       </mat-menu>
     </ng-container>
